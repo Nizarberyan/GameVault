@@ -20,7 +20,7 @@ class User
         } else {
             throw new Exception("Something went wrong. try again.");
         }
-        include("./../html/profile.php");
+        include("./../pages/profile.php");
     }
 
     public function accEdit()
@@ -35,7 +35,7 @@ class User
         } else {
             throw new Exception("Something went wrong. try again.");
         }
-        include("./../html/profile_edit.php");
+        include("./../pages/profile_edit.php");
     }
 
     public function validation()

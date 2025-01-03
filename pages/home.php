@@ -1,5 +1,5 @@
 <?php
-include_once("./../html/header.php");
+include_once("./../pages/header.php");
 ?>
 <?php if (isset($_GET['error'])): ?>
     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -121,5 +121,5 @@ include_once("./../html/header.php");
 </main>
 
 <?php
-include_once("./../html/footer.php");
+include_once("./../pages/footer.php");
 ?>

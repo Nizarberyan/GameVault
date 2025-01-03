@@ -1,79 +1,4 @@
-<?php
-// require '../GameVault/config/database.php';
-// require '../GameVault/classes/game.php';
-
-// // $api_key = '662FF0DF68DC133C1F3878E7BD87787A';  
-// $game = new Game();
-// $games_from_db = $game->getAllGames();
-
-// $games_with_details = [];
-
-
-// foreach ($games_from_db as $db_game) {
-//     $steam_id = $db_game['steam_id'];
-
-
-//     $steam_api_url = "https://store.steampowered.com/api/appdetails?appids={$steam_id}";
-//     $response = file_get_contents($steam_api_url);
-//     $data = json_decode($response, true);
-
-//     if ($data && isset($data[$steam_id]['data'])) {
-//         $game_details = $data[$steam_id]['data'];
-
-//         $game = new Game();
-//         $game->setTitle($db_game['title']);
-//         $game->setSteamId($db_game['steam_id']);
-//         $game->setDescription(isset($game_details['short_description']) ? $game_details['short_description'] : 'No description available.');
-//         $game->setImage(isset($game_details['header_image']) ? $game_details['header_image'] : 'https://via.placeholder.com/150');
-//         $game->setPrice(isset($game_details['price_overview']['final_formatted']) ? $game_details['price_overview']['final_formatted'] : 'Price not available');
-//         $game->setReleaseDate(isset($game_details['release_date']['date']) ? $game_details['release_date']['date'] : 'Release date not available');
-//         $game->setDeveloper(isset($game_details['developers']) ? implode(', ', $game_details['developers']) : 'Developer not available');
-//         $game->setPublisher(isset($game_details['publishers']) ? implode(', ', $game_details['publishers']) : 'Publisher not available');
-
-//         $games_with_details[] = $game;
-//     }
-// }
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Game Collection Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="src/javascript/addGame.js" defer></script>
-    <style>
-        :root {
-            --text: #F8F9FA;
-            --background: #0A0A0B;
-            --primary: #9333EA;
-            --secondary: #1F1F23;
-            --accent: #A855F7;
-        }
-
-        body {
-            background-color: var(--background);
-            color: var(--text);
-        }
-    </style>
-</head>
-
-<body class="text-[var(--text)] bg-[var(--background)]">
-    <header class="bg-[var(--primary)] text-white p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">Game Collection Platform</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="index.php" class="hover:underline">Home</a></li>
-                    <li><a href="library.php" class="hover:underline">Library</a></li>
-                    <li><a href="chat.php" class="hover:underline">Chat</a></li>
-                    <li><a href="profile.php" class="hover:underline">Profile</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<?php require_once("./../pages/header.php") ?>
 
     <main class="container mx-auto my-8 space-y-8">
         <section class="bg-[var(--secondary)] p-6 rounded shadow">
@@ -107,14 +32,8 @@
             </svg>
         </button>
     </main>
-    <footer class="bg-[var(--secondary)] text-white py-4">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2024 Game Collection Platform. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-
-</html>
+    
+<?php require_once("./../pages/footer.php") ?>
 
 
 

@@ -1,6 +1,6 @@
 <?php
-require_once("./../models/User.php");
-require_once("./../models/Db.php");
+require_once("./../classes/User.php");
+require_once("./../config/Db.php");
 
 class userController
 {

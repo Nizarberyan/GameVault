@@ -16,101 +16,159 @@ include_once("./../pages/header.php");
 
 <main class="container mx-auto px-6 py-10">
 
-    <section class="mb-12">
-        <h2 class="text-3xl font-semibold text-gray-800 mb-6">Featured Games</h2>
-        <div class="relative">
-            <div class="overflow-hidden">
-                <div class="flex transition-transform duration-500 ease-in-out justify-center items-center gap-2 p-2 w-full" id="slider">
-
-                    <div class="flex w-4/5 md:w-1/3 lg:w-1/3 xl:w-1/3 mx-auto rounded-lg shadow-xl bg-white h-100">
-                        <img src="https://previews.123rf.com/images/sqback/sqback1610/sqback161000003/63641174-ghost-in-the-dark.jpg" alt="Game Image" class="w-full h-[50%] object-cover rounded-t-lg">
-                        <div class="p-4 h-fit flex flex-col justify-between">
-                            <h3 class="text-xl font-semibold text-gray-800">Game Title</h3>
-                            <p class="text-sm text-gray-600">Game description or genrGame description or genrGame description or genrGame description or genrGame description or genre</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-indigo-600 text-white p-2 rounded-full shadow-lg hover:bg-indigo-700">
-                <span class="text-xl">&#10094;</span>
-            </button>
-            <button id="next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-indigo-600 text-white p-2 rounded-full shadow-lg hover:bg-indigo-700">
-                <span class="text-xl">&#10095;</span>
-            </button>
-        </div>
-    </section>
-
     <section>
-        <h2 class="text-3xl font-semibold text-gray-800 mb-6">Browse Games by Category</h2>
+        <h2 class="text-3xl font-semibold text-[var(--text)] mb-6 w-full border-b-2 p-2 text-center">Browse Games by Category</h2>
 
         <div class="mb-8">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Action</h3>
+            <h3 class="text-2xl font-semibold text-[var(--text)] mb-4">Action</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="relative rounded-lg shadow-xl bg-white">
-                    <div class="relative w-full pb-[80%]"> <!-- Aspect ratio 4:9 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Action Game 1" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Action Game 1</h3>
-                        <p class="text-sm text-gray-600">High-paced combat game</p>
-                    </div>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
                 </div>
 
-                <div class="relative rounded-lg shadow-xl bg-white">
-                    <div class="relative w-full pb-[80%]"> <!-- Aspect ratio 4:9 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Action Game 2" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Action Game 2</h3>
-                        <p class="text-sm text-gray-600">Fast action with dynamic environments</p>
-                    </div>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
                 </div>
 
-                <div class="relative rounded-lg shadow-xl bg-white">
-                    <div class="relative w-full pb-[80%]"> <!-- Aspect ratio 4:9 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Action Game 3" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Action Game 3</h3>
-                        <p class="text-sm text-gray-600">Survival and strategy gameplay</p>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
+                </div>
+
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
                 </div>
             </div>
         </div>
 
         <div>
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Adventure</h3>
+            <h3 class="text-2xl font-semibold text-[var(--text)] mb-4">Adventure</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="relative rounded-lg shadow-xl bg-white">
-                    <div class="relative w-full pb-[80%]"> <!-- Aspect ratio 4:9 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Adventure Game 1" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
+            <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Adventure Game 1</h3>
-                        <p class="text-sm text-gray-600">Explore vast worlds and solve puzzles</p>
-                    </div>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
                 </div>
 
-                <div class="relative rounded-lg shadow-xl bg-white">
-                    <div class="relative w-full pb-[80%]"> <!-- Aspect ratio 4:9 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Adventure Game 2" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Adventure Game 2</h3>
-                        <p class="text-sm text-gray-600">Fantasy exploration and story-driven</p>
-                    </div>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
                 </div>
 
-                <div class="relative rounded-lg shadow-xl bg-white">
-                    <div class="relative w-full pb-[80%]"> <!-- Aspect ratio 4:9 -->
-                        <img src="https://via.placeholder.com/400x300" alt="Adventure Game 3" class="absolute inset-0 w-full h-full object-cover rounded-t-lg">
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold text-gray-800">Adventure Game 3</h3>
-                        <p class="text-sm text-gray-600">Adventurous exploration with combat</p>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
+                </div>
+
+                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                    <div>
+                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
+                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
+                        <div class='text-sm'>
+                            <p class='text-[var(--accent)]'>Price: free</p>
+                            <p>Release Date: 2001-01-01</p>
+                            <p>Developer: ana</p>
+                            <p>Publisher: ana ausi</p>
+                        </div>
                     </div>
+                    <form action='' method='POST'>
+                        <input type='hidden' name='game_title' value=''>
+                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                    </form>
                 </div>
             </div>
         </div>

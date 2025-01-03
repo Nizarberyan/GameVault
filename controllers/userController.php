@@ -53,7 +53,7 @@ class userController
             $user->accEdit();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            header("Location: ./../html/profile.php?error=" . urlencode($errorMessage));
+            header("Location: ./../pages/profile.php?error=" . urlencode($errorMessage));
             exit();
         }
     }

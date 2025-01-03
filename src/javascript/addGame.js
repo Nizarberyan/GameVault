@@ -11,12 +11,12 @@ let slug;
 
 let key = "1766f20ace564900a3f023080d4be43e";
 auto_fill.addEventListener("click", function () {
-   
+
   title = document.getElementById("title");
   if (title.value === "") {
     alert("Please enter a title first");
-    
-    }
+
+  }
   description = document.getElementById("description");
   image = document.getElementById("image");
   release_date = document.getElementById("release_date");
@@ -27,7 +27,7 @@ auto_fill.addEventListener("click", function () {
     .then((response) => response.json())
     .then((data) => {
       title.value = data.name;
-    description.value = data.description.replace(/^<p>/, "").replace(/<\/p>$/, "");
+      description.value = data.description.replace(/^<p>/, "").replace(/<\/p>$/, "");
       image.value = data.background_image;
       release_date.value = data.released;
       developer.value = data.developers[0].name;

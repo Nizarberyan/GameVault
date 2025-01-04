@@ -11,11 +11,9 @@ let slug;
 
 let key = "1766f20ace564900a3f023080d4be43e";
 auto_fill.addEventListener("click", function () {
-
   title = document.getElementById("title");
   if (title.value === "") {
     alert("Please enter a title first");
-
   }
   description = document.getElementById("description");
   image = document.getElementById("image");
@@ -25,6 +23,7 @@ auto_fill.addEventListener("click", function () {
   additional_img = document.getElementById("additional_img");
   rating = document.getElementById("rating");
   slug = title.value.replace(/\s+/g, "-").toLowerCase();
+
   fetch(`https://api.rawg.io/api/games/${slug}?key=${key}`)
     .then((response) => response.json())
     .then((data) => {

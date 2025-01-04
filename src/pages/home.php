@@ -1,44 +1,31 @@
-<?php require_once("./../pages/header.php") ?>
-
-    <main class="container mx-auto my-8 space-y-8">
-        <section class="bg-[var(--secondary)] p-6 rounded shadow">
-            <h2 class="text-xl font-bold mb-4">Available Games</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <?php foreach ($games_with_details as $game) { ?>
-                    <div class='bg-[var(--background)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                        <div>
-                            <img src='<?php echo $game->getImage(); ?>' alt='<?php echo $game->getTitle(); ?>' class='w-full h-40 object-cover rounded mb-4'>
-                            <h3 class='text-lg font-bold mb-2'><?php echo $game->getTitle(); ?></h3>
-                            <p class='text-sm mb-4 line-clamp-3'><?php echo $game->getDescription(); ?></p>
-                            <div class='text-sm'>
-                                <p class='text-[var(--accent)]'>Price: <?php echo $game->getPrice(); ?></p>
-                                <p>Release Date: <?php echo $game->getReleaseDate(); ?></p>
-                                <p>Developer: <?php echo $game->getDeveloper(); ?></p>
-                                <p>Publisher: <?php echo $game->getPublisher(); ?></p>
-                            </div>
-                        </div>
-                        <form action='' method='POST'>
-                            <input type='hidden' name='game_title' value='<?php echo $game->getTitle(); ?>'>
-                            <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                        </form>
-                    </div>
-                <?php } ?>
+<?php include 'header.php'; ?>
+<main class="container mx-auto px-4 my-8 space-y-8 min-h-screen">
+    <section class="bg-[var(--secondary)] p-6 rounded shadow">
+        <h2 class="text-xl font-bold mb-4">Available Games</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="bg-[var(--background)] p-4 rounded-lg shadow">
+                <img src="" alt="Game Cover" class="w-full h-48 object-cover rounded mb-4">
+                <h3 class="text-lg font-semibold mb-2">Game Title</h3>
+                <p class="text-sm text-gray-400">Developer</p>
             </div>
-        </section>
-        <!-- Add Game Button -->
-        <button onclick="openModal()" class="fixed bottom-4 right-4 bg-[var(--primary)] text-white p-4 rounded-full shadow-lg hover:bg-[var(--accent)]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-        </button>
-    </main>
-    
-<?php require_once("./../pages/footer.php") ?>
+        </div>
+    </section>
 
+    <button onclick="openModal()" class="fixed bottom-4 right-4 bg-[var(--primary)] text-white p-4 rounded-full shadow-lg hover:bg-[var(--accent)]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
+</main>
 
+<footer class="bg-[var(--secondary)] text-white py-4">
+    <div class="container mx-auto text-center">
+        <p>&copy; <?php echo date("Y"); ?> Game Collection Platform. All rights reserved.</p>
+    </div>
+</footer>
 
 <!-- Add Game Modal -->
-<div id="addGameModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+<div id="addGameModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
     <div class="bg-[var(--secondary)] p-6 rounded-lg w-full max-w-md">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-bold">Add New Game</h2>
@@ -49,14 +36,13 @@
             </button>
         </div>
         <form action="" method="POST" class="space-y-4">
-        <div>
+            <div>
                 <label class="block text-sm font-medium mb-1">Title</label>
                 <div class="flex gap-2">
                     <input type="text" name="Title" id="title" required class="w-full p-2 rounded bg-[var(--background)] text-white">
-                    <button type="button" id="AutoFill"class="px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]">
+                    <button type="button" id="AutoFill" class="px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]">
                         Auto Fill
                     </button>
-            
                 </div>
             </div>
             <div>

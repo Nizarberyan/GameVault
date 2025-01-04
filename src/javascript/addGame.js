@@ -11,17 +11,9 @@ let slug;
 
 let key = "1766f20ace564900a3f023080d4be43e";
 auto_fill.addEventListener("click", function () {
-<<<<<<< HEAD
   title = document.getElementById("title");
   if (title.value === "") {
     alert("Please enter a title first");
-=======
-
-  title = document.getElementById("title");
-  if (title.value === "") {
-    alert("Please enter a title first");
-
->>>>>>> marouan
   }
   description = document.getElementById("description");
   image = document.getElementById("image");
@@ -36,13 +28,7 @@ auto_fill.addEventListener("click", function () {
     .then((response) => response.json())
     .then((data) => {
       title.value = data.name;
-<<<<<<< HEAD
-      description.value = data.description
-        .replace(/^<p>/, "")
-        .replace(/<\/p>$/, "");
-=======
       description.value = data.description.replace(/^<p>/, "").replace(/<\/p>$/, "");
->>>>>>> marouan
       image.value = data.background_image;
       release_date.value = data.released;
       developer.value = data.developers[0].name;

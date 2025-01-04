@@ -1,6 +1,6 @@
 <?php
 require_once("./../config/Db.php");
-require_once("./../classes/game.php");
+require_once("./../classes/Game.php");
 
 class gameController
 {
@@ -25,15 +25,22 @@ class gameController
 
     private function gameAdd()
     {
+        $path = "./../pages/dashboard.php";
         try {
             $newGame = new Game($this->pdo);
             $newGame->addGame();
+            $successMessage = "Game added seccussfuly!!";
+            $this->redirect("success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            header("Location: ./../pages/dashboard.php?error=" . urlencode($errorMessage));
+            $this->redirect("error", $errorMessage, $path);
             exit();
         }
-        header("Location: ./../pages/dashboard.php");
+    }
+
+    private function redirect($var, $message, $path)
+    {
+        header("Location: " . $path . "?" . $var . "=" . urlencode($message));
     }
 }
 

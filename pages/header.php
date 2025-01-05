@@ -1,3 +1,4 @@
+<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,10 +39,10 @@
         </div>
     </header>
 
-    <?php if (isset($_GET['error'])): ?>
+    <?php if (isset($_SESSION['Error'])): ?>
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">Error: </strong>
-            <span class="block sm:inline"><?= htmlspecialchars($_GET['error']); ?></span>
+            <span class="block sm:inline"><?= htmlspecialchars($_SESSION['Message']); ?></span>
             <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
                 <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <title></title>
@@ -49,11 +50,14 @@
                 </svg>
             </button>
         </div>
-    <?php endif; ?>
-    <?php if (isset($_GET['success'])): ?>
+    <?php
+        unset($_SESSION['Error']);
+        unset($_SESSION['Message']);
+    endif; ?>
+    <?php if (isset($_SESSION['Success'])): ?>
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">Success: </strong>
-            <span class="block sm:inline"><?= htmlspecialchars($_GET['success']); ?></span>
+            <span class="block sm:inline"><?= htmlspecialchars($_SESSION['Message']); ?></span>
             <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
                 <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                     <title>Close</title>
@@ -61,4 +65,7 @@
                 </svg>
             </button>
         </div>
-    <?php endif; ?>
+    <?php
+        unset($_SESSION['Success']);
+        unset($_SESSION['Message']);
+    endif; ?>

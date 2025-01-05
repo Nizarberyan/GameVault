@@ -24,7 +24,7 @@ class Game
     {
         try {
             $this->pdo->beginTransaction();
-            $insert = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher) VALUES (:game_name, :game_desc, :game_img, :release_date, :category, :developer, :publisher)");
+            $insert = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher, rating) VALUES (:game_name, :game_desc, :game_img, :release_date, :category, :developer, :publisher, :rating)");
             $insert->bindParam(":game_name", $_POST['Title']);
             $insert->bindParam(":game_desc", $_POST['description']);
             $insert->bindParam(":game_img", $_POST['image']);
@@ -32,6 +32,7 @@ class Game
             $insert->bindParam(":release_date", $_POST['release_date']);
             $insert->bindParam(":developer", $_POST['developer']);
             $insert->bindParam(":publisher", $_POST['publisher']);
+            $insert->bindParam(":rating", $_POST['rating']);
             if (!$insert->execute()) {
                 throw new Exception("The game has not been added seccussfuly!!");
             }

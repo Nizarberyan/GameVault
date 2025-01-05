@@ -60,6 +60,7 @@
                     <h3 class='text-lg font-bold mb-2'><?= $game_name ?></h3>
                     <p class='text-sm mb-4 line-clamp-3'><?= substr($game_desc, 0, 89) . "..." ?></p>
                     <div class='text-sm'>
+                        <p>Rating: <?= $rating . "/100" ?></p>
                         <p>Release Date: <?= $release_date ?></p>
                         <p>Developer: <?= $developer ?></p>
                         <p>Publisher: <?= $publisher ?></p>

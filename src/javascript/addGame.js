@@ -34,7 +34,7 @@ auto_fill.addEventListener("click", function () {
       developer.value = data.developers[0].name;
       publisher.value = data.publishers[0].name;
       additional_img.value = data.background_image_additional;
-      rating.value = data.rating;
+      rating.value = data.metacritic;
       console.log(data);
     })
     .catch((error) => {

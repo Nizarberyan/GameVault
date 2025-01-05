@@ -1,4 +1,5 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) session_start();
 require_once("./../config/Db.php");
 require_once("./../classes/Game.php");
 
@@ -51,18 +52,20 @@ class gameController
                 throw new Exception("Target directory is not writable.");
             }
             $newGame->addGame($target_dir);
-            $successMessage = "Game added seccussfuly!!";
-            $this->redirect("success", $successMessage, $path);
+            $successMessage = "Game has been deleted seccussfuly!!";
+            $this->redirect("Success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            $this->redirect("error", $errorMessage, $path);
+            $this->redirect("Error", $errorMessage, $path);
             exit();
         }
     }
 
     private function redirect($var, $message, $path)
     {
-        header("Location: " . $path . "?" . $var . "=" . urlencode($message));
+        $_SESSION[$var] = true;
+        $_SESSION['Message'] = $message;
+        header("Location: $path");
     }
 
     private function gameRenderForER()
@@ -73,7 +76,7 @@ class gameController
             $newGame->gamesRenderer();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            $this->redirect("error", $errorMessage, $path);
+            $this->redirect("Error", $errorMessage, $path);
             exit();
         }
     }
@@ -88,10 +91,10 @@ class gameController
             $newGame = new Game($this->pdo);
             $newGame->deleteGame((int)$_POST["game_id"]);
             $successMessage = "Game has been deleted seccussfuly!!";
-            $this->redirect("success", $successMessage, $path);
+            $this->redirect("Success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            $this->redirect("error", $errorMessage, $path);
+            $this->redirect("Error", $errorMessage, $path);
             exit();
         }
     }

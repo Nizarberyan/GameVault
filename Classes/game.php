@@ -15,7 +15,7 @@ class Game
         if ($stmt->execute()) {
             $info = $stmt->fetchAll(PDO::FETCH_ASSOC);
             include("./../pages/gamesList.php");
-        }else {
+        } else {
             throw new Exception("Something went wrong");
         }
     }
@@ -97,12 +97,13 @@ class Game
     //     $stmt->bindParam(":publisher", $publisher);
     //     $stmt->execute();
     // }
-    // public function deleteGame($title) {
-    //     $query = "DELETE FROM games WHERE title = :title";
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(":title", $title);
-    //     $stmt->execute();
-    // }
+    public function deleteGame($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM library WHERE game_id = :game_id");
+        $stmt->bindParam(":game_id", $id);
+        if (!$stmt->execute()) {
+            throw new Exception("The game has not been deleted successfuly!!");
+        }
+    }
     // public function getAllGames() {
     //     $query = "SELECT * FROM games";
     //     $stmt = $this->conn->prepare($query);

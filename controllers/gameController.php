@@ -24,6 +24,10 @@ class gameController
             case "ER":
                 $this->gameRenderForER();
                 break;
+
+            case "deleteGame":
+                $this->deleteGame();
+                break;
         }
     }
 
@@ -47,11 +51,30 @@ class gameController
         header("Location: " . $path . "?" . $var . "=" . urlencode($message));
     }
 
-    private function gameRenderForER(){
+    private function gameRenderForER()
+    {
         $path = "./../pages/dashboard.php";
         try {
             $newGame = new Game($this->pdo);
             $newGame->gamesRenderer();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("error", $errorMessage, $path);
+            exit();
+        }
+    }
+
+    private function deleteGame()
+    {
+        $path = "./../controllers/gameController.php?action=ER&";
+        try {
+            if (!isset($_POST["game_id"])) {
+                throw new Exception("Something went wrong. try again");
+            }
+            $newGame = new Game($this->pdo);
+            $newGame->deleteGame((int)$_POST["game_id"]);
+            $successMessage = "Game has been deleted seccussfuly!!";
+            $this->redirect("success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
             $this->redirect("error", $errorMessage, $path);

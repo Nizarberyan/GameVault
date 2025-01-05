@@ -24,15 +24,15 @@ class Game
     {
         try {
             $this->pdo->beginTransaction();
-            $insert = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher, rating) VALUES (:game_name, :game_desc, :game_img, :release_date, :category, :developer, :publisher, :rating)");
-            $insert->bindParam(":game_name", $_POST['Title']);
-            $insert->bindParam(":game_desc", $_POST['description']);
-            $insert->bindParam(":game_img", $_POST['image']);
-            $insert->bindParam(":category", $_POST['category']);
-            $insert->bindParam(":release_date", $_POST['release_date']);
-            $insert->bindParam(":developer", $_POST['developer']);
-            $insert->bindParam(":publisher", $_POST['publisher']);
-            $insert->bindParam(":rating", $_POST['rating']);
+            $insert = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $insert->bindParam(1, $_POST['Title']);
+            $insert->bindParam(2, $_POST['description']);
+            $insert->bindParam(3, $_POST['image']);
+            $insert->bindParam(4, $_POST['release_date']);
+            $insert->bindParam(5, $_POST['category']);
+            $insert->bindParam(6, $_POST['developer']);
+            $insert->bindParam(7, $_POST['publisher']);
+            $insert->bindParam(8, $_POST['rating']);
             if (!$insert->execute()) {
                 throw new Exception("The game has not been added seccussfuly!!");
             }
@@ -61,8 +61,9 @@ class Game
             $this->pdo->commit();
         } catch (Exception $e) {
             $this->pdo->rollback();
-            $errorMessage = $e->getMessage();
-            header("Location: ./../pages/dashboard.php?error=" . urlencode($errorMessage));
+            $_SESSION['Error'] = true;
+            $_SESSION['Message'] = $e->getMessage();
+            header("Location: ./../pages/dashboard.php");
             exit();
         }
     }

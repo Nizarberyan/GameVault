@@ -17,10 +17,6 @@ class userController
         $this->action = $_GET['action'];
 
         switch ($this->action) {
-            case "register":
-                $this->register();
-                break;
-
             case "on":
                 $this->accRender();
                 break;
@@ -33,11 +29,6 @@ class userController
                 $this->accModify();
                 break;
         }
-    }
-
-    private function register()
-    {
-        $user = new User($this->pdo);
     }
 
     private function accRender()

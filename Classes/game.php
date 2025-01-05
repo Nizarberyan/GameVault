@@ -20,58 +20,41 @@ class Game
         }
     }
 
-    public function addGame()
+    public function addGame($target_dir)
     {
         try {
             $this->pdo->beginTransaction();
-            $stmt = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher) VALUES (:game_name, :game_desc, :game_img, :release_date, :category, :developer, :publisher)");
-            $stmt->bindParam(":game_name", $_POST['Title']);
-            $stmt->bindParam(":game_desc", $_POST['description']);
-            $stmt->bindParam(":game_img", $_POST['image']);
-            $stmt->bindParam(":category", $_POST['category']);
-            $stmt->bindParam(":release_date", $_POST['release_date']);
-            $stmt->bindParam(":developer", $_POST['developer']);
-            $stmt->bindParam(":publisher", $_POST['publisher']);
-            if (!$stmt->execute()) {
+            $insert = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher) VALUES (:game_name, :game_desc, :game_img, :release_date, :category, :developer, :publisher)");
+            $insert->bindParam(":game_name", $_POST['Title']);
+            $insert->bindParam(":game_desc", $_POST['description']);
+            $insert->bindParam(":game_img", $_POST['image']);
+            $insert->bindParam(":category", $_POST['category']);
+            $insert->bindParam(":release_date", $_POST['release_date']);
+            $insert->bindParam(":developer", $_POST['developer']);
+            $insert->bindParam(":publisher", $_POST['publisher']);
+            if (!$insert->execute()) {
                 throw new Exception("The game has not been added seccussfuly!!");
             }
+            
             $additional_img = null;
-            if (isset($_FILES['additional_img2']) && $_FILES['additional_img2']['error'] === UPLOAD_ERR_OK) {
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (!in_array($_FILES['additional_img2']['type'], $allowedTypes)) {
-                    throw new Exception("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
-                }
-
-                $target_dir = "./../assests/";
-                if (!is_dir($target_dir)) {
-                    throw new Exception("Target directory does not exist.");
-                }
-                if (!is_writable($target_dir)) {
-                    throw new Exception("Target directory is not writable.");
-                }
-
-                $file_extension = strtolower(pathinfo($_FILES['additional_img2']['name'], PATHINFO_EXTENSION));
-                $unique_file_name = uniqid() . '.' . $file_extension;
-                $additional_img = $target_dir . $unique_file_name;
-                if (!move_uploaded_file($_FILES['additional_img2']['tmp_name'], $additional_img)) {
-                    throw new Exception("Failed to upload the file.");
-                }
-            } else {
-                throw new Exception("No file uploaded or an upload error occurred.");
+            $file_extension = strtolower(pathinfo($_FILES['additional_img2']['name'], PATHINFO_EXTENSION));
+            $unique_file_name = uniqid() . '.' . $file_extension;
+            $additional_img = $target_dir . $unique_file_name;
+            if (!move_uploaded_file($_FILES['additional_img2']['tmp_name'], $additional_img)) {
+                throw new Exception("Failed to upload the file.");
             }
-            $last_id = (int) $this->pdo->lastInsertId();
 
-            $stmt = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url1)");
-            $stmt->bindParam(":game_id", $last_id);
-            $stmt->bindParam(":url1", $_POST['additional_img']);
-            if (!$stmt->execute()) {
+            $last_id = (int) $this->pdo->lastInsertId();
+            $firstUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url1)");
+            $firstUrl->bindParam(":game_id", $last_id);
+            $firstUrl->bindParam(":url1", $_POST['additional_img']);
+            if (!$firstUrl->execute()) {
                 throw new Exception("An error appear with the images inserting try again.");
             }
-
-            $stmt = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url2)");
-            $stmt->bindParam(":game_id", $last_id);
-            $stmt->bindParam(":url2", $additional_img);
-            if (!$stmt->execute()) {
+            $secondUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url2)");
+            $secondUrl->bindParam(":game_id", $last_id);
+            $secondUrl->bindParam(":url2", $additional_img);
+            if (!$secondUrl->execute()) {
                 throw new Exception("An error appear with the images inserting try again.");
             }
             $this->pdo->commit();
@@ -91,23 +74,17 @@ class Game
     //     $stmt->bindParam(":steam_id", $steam_id);
     //     $stmt->bindParam(":description", $description);
     //     $stmt->bindParam(":image", $image);
-    //     $stmt->bindParam(":price", $price);
     //     $stmt->bindParam(":release_date", $release_date);
     //     $stmt->bindParam(":developer", $developer);
     //     $stmt->bindParam(":publisher", $publisher);
     //     $stmt->execute();
     // }
-    public function deleteGame($id) {
+    public function deleteGame($id)
+    {
         $stmt = $this->pdo->prepare("DELETE FROM library WHERE game_id = :game_id");
         $stmt->bindParam(":game_id", $id);
         if (!$stmt->execute()) {
             throw new Exception("The game has not been deleted successfuly!!");
         }
     }
-    // public function getAllGames() {
-    //     $query = "SELECT * FROM games";
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
 }

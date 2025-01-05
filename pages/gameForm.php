@@ -24,7 +24,7 @@
                 <textarea name="description" id="description" class="resize-none w-full p-2 rounded bg-[var(--background)] text-white"></textarea>
             </div>
             <div>
-                <label class="block text-sm font-medium mb-1">Image URL</label>
+                <label class="block text-sm font-medium mb-1">Game Poster (URL)</label>
                 <input type="url" name="image" id="image" required class="w-full p-2 rounded bg-[var(--background)] text-white">
             </div>
             <div>

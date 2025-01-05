@@ -77,19 +77,3 @@
 
 <?php require_once("./../pages/footer.php") ?>
 <?php require_once("./../pages/gameForm.php") ?>
-
-<script>
-    function searchGames() {
-        const searchQuery = document.getElementById('search-bar').value.toLowerCase();
-        const gameCards = document.querySelectorAll('.game-card');
-
-        gameCards.forEach(card => {
-            const gameTitle = card.querySelector('h3').textContent.toLowerCase();
-            if (gameTitle.includes(searchQuery)) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-</script>

@@ -62,13 +62,12 @@ class userController
     {
         try {
             $user = new User($this->pdo);
-            // if ($user->validation()){
-
-            // }
-            $user->accModify();
+            if ($user->validation()) { //validation function need some improvement and fixing!!!!
+                $user->accModify();
+            }
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            header("Location: ./../html/profile_edit.php?error=" . urlencode($errorMessage));
+            header("Location: ./../pages/profile_edit.php?error=" . urlencode($errorMessage));
             exit();
         }
     }

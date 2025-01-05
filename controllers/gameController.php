@@ -44,7 +44,7 @@ class gameController
             if (!in_array($_FILES['additional_img2']['type'], $allowedTypes)) {
                 throw new Exception("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
             }
-            $target_dir = "./../assests/";
+            $target_dir = "./../assets/";
             if (!is_dir($target_dir)) {
                 throw new Exception("Target directory does not exist.");
             }

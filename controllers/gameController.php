@@ -20,6 +20,10 @@ class gameController
             case "gCreate":
                 $this->gameAdd();
                 break;
+
+            case "ER":
+                $this->gameRenderForER();
+                break;
         }
     }
 
@@ -41,6 +45,18 @@ class gameController
     private function redirect($var, $message, $path)
     {
         header("Location: " . $path . "?" . $var . "=" . urlencode($message));
+    }
+
+    private function gameRenderForER(){
+        $path = "./../pages/dashboard.php";
+        try {
+            $newGame = new Game($this->pdo);
+            $newGame->gamesRenderer();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("error", $errorMessage, $path);
+            exit();
+        }
     }
 }
 

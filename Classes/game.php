@@ -9,13 +9,15 @@ class Game
         $this->pdo = $pdo;
     }
 
-    public function gameDetails()
+    public function gamesRenderer()
     {
-        // $query = "SELECT * FROM games WHERE title = :title";
-        // $stmt = $this->pdo->prepare($query);
-        // $stmt->bindParam(":title", $this->title);
-        // $stmt->execute();
-        // $info = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = $this->pdo->prepare("SELECT * FROM library");
+        if ($stmt->execute()) {
+            $info = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            include("./../pages/gamesList.php");
+        }else {
+            throw new Exception("Something went wrong");
+        }
     }
 
     public function addGame()

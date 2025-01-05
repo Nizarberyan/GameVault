@@ -8,10 +8,10 @@
                 Add Games
             </button>
             <button class="w-full bg-[var(--primary)] text-[var(--text)] py-2 px-4 rounded-lg hover:bg-opacity-90">
-                Edit Game
+                <a href="./../controllers/gameController.php?action=ER">Edit Game</a>
             </button>
             <button class="w-full bg-red-500 text-[var(--text)] py-2 px-4 rounded-lg hover:bg-red-600">
-                Delete Game
+            <a href="./../controllers/gameController.php?action=ER">Delete Game</a>
             </button>
         </div>
     </section>

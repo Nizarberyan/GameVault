@@ -50,7 +50,7 @@
                 </div>
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Rating</label>
-                    <input type="text" name="rating" id="rating" class="w-full p-2 rounded bg-[var(--background)] text-white" value="">
+                    <input type="number" name="rating" id="rating" class="w-full p-2 rounded bg-[var(--background)] text-white" value="">
                 </div>
             </div>
             <div>

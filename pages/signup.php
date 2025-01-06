@@ -1,6 +1,8 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
-$db = new Database();
+require_once __DIR__ . '../../config/Db.php';
+require_once __DIR__ . '../../Classes/User.php';
+$pdo = Db::getInstance();
+$user = new User($pdo);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Passwords do not match.";
     } else {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        if ($db->insertUser($username, $email, $hashedPassword)) {
+        if ($user->insertUser($username, $email, $hashedPassword)) {
             header('Location: ?page=login');
             exit();
         } else {

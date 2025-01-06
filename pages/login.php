@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../../config/database.php';
-
+require_once __DIR__ . '/../../Classes/User.php';
+$pdo = Db::getInstance();
+$user = new User($pdo);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "All fields are required.";
     } else {
         $db = new Database();
-        $userId = $db->loginUser($email, $password);
+        $userId = $user->loginUser($email, $password);
 
         if ($userId) {
             $_SESSION['user_id'] = $userId;

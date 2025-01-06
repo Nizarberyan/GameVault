@@ -13,14 +13,13 @@ class Game
     {
         $stmt = $this->pdo->prepare("SELECT * FROM library");
         if ($stmt->execute()) {
-            $info = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            include("./../pages/gamesList.php");
+            return $info = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             throw new Exception("Something went wrong");
         }
     }
 
-    public function addGame($target_dir)
+    public function addGame($target_dir, $additional_img)
     {
         try {
             $this->pdo->beginTransaction();
@@ -36,28 +35,22 @@ class Game
             if (!$insert->execute()) {
                 throw new Exception("The game has not been added seccussfuly!!");
             }
-            
-            $additional_img = null;
-            $file_extension = strtolower(pathinfo($_FILES['additional_img2']['name'], PATHINFO_EXTENSION));
-            $unique_file_name = uniqid() . '.' . $file_extension;
-            $additional_img = $target_dir . $unique_file_name;
-            if (!move_uploaded_file($_FILES['additional_img2']['tmp_name'], $additional_img)) {
-                throw new Exception("Failed to upload the file.");
-            }
 
             $last_id = (int) $this->pdo->lastInsertId();
-            $firstUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url1)");
-            $firstUrl->bindParam(":game_id", $last_id);
-            $firstUrl->bindParam(":url1", $_POST['additional_img']);
+            $firstUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url, row_id) VALUES (?, ?, 1);");
+            $firstUrl->bindParam(1, $last_id);
+            $firstUrl->bindParam(2, $_POST['additional_img']);
             if (!$firstUrl->execute()) {
-                throw new Exception("An error appear with the images inserting try again.");
+                throw new Exception("An error occurred with the first image insertion.");
             }
-            $secondUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url2)");
-            $secondUrl->bindParam(":game_id", $last_id);
-            $secondUrl->bindParam(":url2", $additional_img);
+
+            $secondUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url, row_id) VALUES (?, ?, 2);");
+            $secondUrl->bindParam(1, $last_id);
+            $secondUrl->bindParam(2, $additional_img);
             if (!$secondUrl->execute()) {
-                throw new Exception("An error appear with the images inserting try again.");
+                throw new Exception("An error occurred with the second image insertion.");
             }
+
             $this->pdo->commit();
         } catch (Exception $e) {
             $this->pdo->rollback();
@@ -68,25 +61,66 @@ class Game
         }
     }
 
-    // public function updateGame($title, $steam_id, $description, $image, $price, $release_date, $developer, $publisher) {
-    //     $query = "UPDATE games SET title = :title, steam_id = :steam_id, description = :description, image = :image, price = :price, release_date = :release_date, developer = :developer, publisher = :publisher WHERE id = :id";
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(":id", $id);
-    //     $stmt->bindParam(":title", $title);
-    //     $stmt->bindParam(":steam_id", $steam_id);
-    //     $stmt->bindParam(":description", $description);
-    //     $stmt->bindParam(":image", $image);
-    //     $stmt->bindParam(":release_date", $release_date);
-    //     $stmt->bindParam(":developer", $developer);
-    //     $stmt->bindParam(":publisher", $publisher);
-    //     $stmt->execute();
-    // }
-    public function deleteGame($id)
+    public function updateGame($target_dir, $additional_img)
     {
-        $stmt = $this->pdo->prepare("DELETE FROM library WHERE game_id = :game_id");
-        $stmt->bindParam(":game_id", $id);
-        if (!$stmt->execute()) {
+        try {
+            $this->pdo->beginTransaction();
+            $mainInfo = $this->pdo->prepare("UPDATE library SET game_name = ?, game_desc = ?, game_img = ?, rating = ?, release_date = ?, developer = ?, publisher = ?, category = ? WHERE game_id = ?");
+            if (!$mainInfo->execute([
+                $_POST['Title'],
+                $_POST['description'],
+                $_POST['image'],
+                $_POST['rating'],
+                $_POST['release_date'],
+                $_POST['developer'],
+                $_POST['publisher'],
+                $_POST['category'],
+                $_POST['game_id']
+            ])) throw new Exception("The game has not been added successfully!");
+
+            $additional_imgs = $this->pdo->prepare("UPDATE screenshots
+                                        SET url = CASE
+                                            WHEN game_id = ? AND row_id = 1 THEN ?
+                                            WHEN game_id = ? AND row_id = 2 THEN ?
+                                            ELSE url
+                                        END
+                                        WHERE game_id = ? AND row_id IN (1, 2);");
+
+            if (!$additional_imgs->execute([$_POST['game_id'], $_POST['additional_img1'], $_POST['game_id'], $_POST['additional_img2'], $_POST['game_id']])) {
+                throw new Exception("An error appeared with the images insertion. Please try again.");
+            }
+
+            $this->pdo->commit();
+        } catch (Exception $e) {
+            $this->pdo->rollback();
+            $_SESSION['Error'] = true;
+            $_SESSION['Message'] = $e->getMessage();
+            header("Location: ./../controllers/gameController.php?action=ER");
+            exit();
+        }
+    }
+    public function deleteGame($game_id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM library WHERE game_id = ?;");
+        if (!$stmt->execute([$game_id])) {
             throw new Exception("The game has not been deleted successfuly!!");
         }
+    }
+
+    public function editSession($game_id)
+    {
+        $info = $this->pdo->prepare("SELECT * FROM library WHERE game_id = ?;");
+        $info->bindParam(1, $game_id);
+        if (!$info->execute()) throw new Exception("Something went wrong");
+        $info = $info->fetch(PDO::FETCH_ASSOC);
+        extract($info);
+
+        $additional_data = $this->pdo->prepare("SELECT url FROM screenshots WHERE game_id = ?;");
+        $additional_data->bindParam(1, $game_id);
+        if (!$additional_data->execute()) throw new Exception("Something went wrong");
+        $additional_data = $additional_data->fetchAll(PDO::FETCH_ASSOC);
+        extract($additional_data[0], EXTR_PREFIX_ALL, "r1");
+        extract($additional_data[1], EXTR_PREFIX_ALL, "r2");
+        include("./../pages/gameEdit.php");
     }
 }

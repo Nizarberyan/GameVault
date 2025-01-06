@@ -1,6 +1,6 @@
 <?php require_once("./../pages/header.php") ?>
 
-<div class="container mx-auto space-y-6 min-h-[75vh] mt-5 mb-5 p-5">
+<div class="container mx-auto space-y-6 min-h-[85vh] mt-5 mb-5 p-5 flex flex-col justify-center">
     <section class="bg-[var(--secondary)] rounded-lg p-6 shadow-md">
         <h2 class="text-lg font-semibold text-[var(--primary)] mb-4">Manage Games</h2>
         <div class="flex flex-wrap items-center justify-center gap-5">

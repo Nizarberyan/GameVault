@@ -14,5 +14,8 @@
       "database": "gamevault",
       "password": ""
     }
-  ]
+  ],
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "terminal.integrated.cursorBlinking": true
 }

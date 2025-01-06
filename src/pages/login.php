@@ -5,25 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
 
-    if (empty($email) || empty($password)) {
-        $error = "All fields are required.";
-    } else {
-        $db = new Database();
-        $userId = $db->loginUser($email, $password);
-
-        if ($userId) {
-            $_SESSION['user_id'] = $userId;
-            header('Location: ?page=home');
-            exit();
-        } else {
-            $error = "Invalid email or password.";
-        }
-    }
-}
 ?>
 
 <div class="bg-[var(--secondary)] p-8 rounded-lg shadow-lg w-96">

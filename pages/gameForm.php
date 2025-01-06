@@ -71,7 +71,6 @@
     function openModal() {
         document.getElementById('gameForm').classList.remove('hidden');
     }
-
     function closeModal() {
         document.getElementById('gameForm').classList.add('hidden');
     }

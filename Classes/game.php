@@ -1,113 +1,92 @@
-<?php 
+<?php
 
-class Game {
-    private $title;
-    private $steam_id;
-    private $description;
-    private $image;
-    private $price;
-    private $release_date;
-    private $developer;
-    private $publisher;
-    private $conn;
-    public function __construct() {
-        $db = new Database();
-        $this->conn = $db->getConnection();
-    }
-    public function getGameDetails() {
-        $query = "SELECT * FROM games WHERE title = :title";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":title", $this->title);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-    public function setTitle($title) {
-        $this->title = $title;
-    }
-    public function getTitle() {
-        return $this->title;
-    }
-    public function setSteamId($steam_id) {
-        $this->steam_id = $steam_id;
+class Game
+{
+    private $pdo;
+
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
     }
 
-    public function getSteamId() {
-        return $this->steam_id;
-    }
-    public function setDescription($description) {
-        $this->description = $description;
-    }
-    public function getDescription() {
-        return $this->description;
-    }
-    public function setImage($image) {
-        $this->image = $image;
-    }
-    public function getImage() {
-        return $this->image;
-    }
-    public function setPrice($price) {
-        $this->price = $price;
-    }
-    public function getPrice() {
-        return $this->price;
-    }
-    public function setReleaseDate($release_date) {
-        $this->release_date = $release_date;
-    }
-    public function getReleaseDate() {
-        return $this->release_date;
-    }
-    public function setDeveloper($developer) {
-        $this->developer = $developer;
-    }
-    public function getDeveloper() {
-        return $this->developer;
-    }
-    public function setPublisher($publisher) {
-        $this->publisher = $publisher;
-    }
-    public function getPublisher() {
-        return $this->publisher;
+    public function gamesRenderer()
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM library");
+        if ($stmt->execute()) {
+            $info = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            include("./../pages/gamesList.php");
+        } else {
+            throw new Exception("Something went wrong");
+        }
     }
 
-    public function addGame($title, $steam_id, $description, $image, $price, $release_date, $developer, $publisher) {
-        $query = "INSERT INTO games (title, steam_id, description, image, price, release_date, developer, publisher) VALUES (:title, :steam_id, :description, :image, :price, :release_date, :developer, :publisher)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":steam_id", $steam_id);
-        $stmt->bindParam(":description", $description);
-        $stmt->bindParam(":image", $image);
-        $stmt->bindParam(":price", $price);
-        $stmt->bindParam(":release_date", $release_date);
-        $stmt->bindParam(":developer", $developer);
-        $stmt->bindParam(":publisher", $publisher);
-        $stmt->execute();
+    public function addGame($target_dir)
+    {
+        try {
+            $this->pdo->beginTransaction();
+            $insert = $this->pdo->prepare("INSERT INTO library (game_name, game_desc, game_img, release_date, category, developer, publisher, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            $insert->bindParam(1, $_POST['Title']);
+            $insert->bindParam(2, $_POST['description']);
+            $insert->bindParam(3, $_POST['image']);
+            $insert->bindParam(4, $_POST['release_date']);
+            $insert->bindParam(5, $_POST['category']);
+            $insert->bindParam(6, $_POST['developer']);
+            $insert->bindParam(7, $_POST['publisher']);
+            $insert->bindParam(8, $_POST['rating']);
+            if (!$insert->execute()) {
+                throw new Exception("The game has not been added seccussfuly!!");
+            }
+            
+            $additional_img = null;
+            $file_extension = strtolower(pathinfo($_FILES['additional_img2']['name'], PATHINFO_EXTENSION));
+            $unique_file_name = uniqid() . '.' . $file_extension;
+            $additional_img = $target_dir . $unique_file_name;
+            if (!move_uploaded_file($_FILES['additional_img2']['tmp_name'], $additional_img)) {
+                throw new Exception("Failed to upload the file.");
+            }
+
+            $last_id = (int) $this->pdo->lastInsertId();
+            $firstUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url1)");
+            $firstUrl->bindParam(":game_id", $last_id);
+            $firstUrl->bindParam(":url1", $_POST['additional_img']);
+            if (!$firstUrl->execute()) {
+                throw new Exception("An error appear with the images inserting try again.");
+            }
+            $secondUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url) VALUES (:game_id, :url2)");
+            $secondUrl->bindParam(":game_id", $last_id);
+            $secondUrl->bindParam(":url2", $additional_img);
+            if (!$secondUrl->execute()) {
+                throw new Exception("An error appear with the images inserting try again.");
+            }
+            $this->pdo->commit();
+        } catch (Exception $e) {
+            $this->pdo->rollback();
+            $_SESSION['Error'] = true;
+            $_SESSION['Message'] = $e->getMessage();
+            header("Location: ./../pages/dashboard.php");
+            exit();
+        }
     }
-    public function updateGame($title, $steam_id, $description, $image, $price, $release_date, $developer, $publisher) {
-        $query = "UPDATE games SET title = :title, steam_id = :steam_id, description = :description, image = :image, price = :price, release_date = :release_date, developer = :developer, publisher = :publisher WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":title", $title);
-        $stmt->bindParam(":steam_id", $steam_id);
-        $stmt->bindParam(":description", $description);
-        $stmt->bindParam(":image", $image);
-        $stmt->bindParam(":price", $price);
-        $stmt->bindParam(":release_date", $release_date);
-        $stmt->bindParam(":developer", $developer);
-        $stmt->bindParam(":publisher", $publisher);
-        $stmt->execute();
-    }
-    public function deleteGame($title) {
-        $query = "DELETE FROM games WHERE title = :title";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":title", $title);
-        $stmt->execute();
-    }
-    public function getAllGames() {
-        $query = "SELECT * FROM games";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // public function updateGame($title, $steam_id, $description, $image, $price, $release_date, $developer, $publisher) {
+    //     $query = "UPDATE games SET title = :title, steam_id = :steam_id, description = :description, image = :image, price = :price, release_date = :release_date, developer = :developer, publisher = :publisher WHERE id = :id";
+    //     $stmt = $this->conn->prepare($query);
+    //     $stmt->bindParam(":id", $id);
+    //     $stmt->bindParam(":title", $title);
+    //     $stmt->bindParam(":steam_id", $steam_id);
+    //     $stmt->bindParam(":description", $description);
+    //     $stmt->bindParam(":image", $image);
+    //     $stmt->bindParam(":release_date", $release_date);
+    //     $stmt->bindParam(":developer", $developer);
+    //     $stmt->bindParam(":publisher", $publisher);
+    //     $stmt->execute();
+    // }
+    public function deleteGame($id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM library WHERE game_id = :game_id");
+        $stmt->bindParam(":game_id", $id);
+        if (!$stmt->execute()) {
+            throw new Exception("The game has not been deleted successfuly!!");
+        }
     }
 }

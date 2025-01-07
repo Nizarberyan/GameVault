@@ -1,4 +1,5 @@
 <?php
+require_once("./../pages/header.php");
 require_once __DIR__ . '../../config/Db.php';
 require_once __DIR__ . '../../Classes/User.php';
 $pdo = Db::getInstance();

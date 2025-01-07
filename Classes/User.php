@@ -109,7 +109,7 @@ class User
 
     public function insertUser($username, $email, $password)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+        $stmt = $this->pdo->prepare("INSERT INTO users (full_name, email, user_psw) VALUES (?, ?, ?)");
         $stmt->bindParam(1, $username);
         $stmt->bindParam(2, $email);
         $stmt->bindParam(3, $password);
@@ -122,8 +122,8 @@ class User
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['password'])) {
-            return $user['id'];
+        if ($user && password_verify($password, $user['user_psw'])) {
+            return $user['user_id'];
         } else {
             return false;
         }

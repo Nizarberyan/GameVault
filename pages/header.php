@@ -35,7 +35,7 @@
                     <li><a href="library.php" class="hover:underline">Library</a></li>
                     <li><a href="./../controllers/userController.php?action=on" class="hover:underline">Profile</a></li>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"): ?>
-                        <li><a href="./../pages/dashboard.php" class="hover:underline">Dashboard</a></li>
+                        <li><a href="./../controllers/userController.php" class="hover:underline">Dashboard</a></li>
                     <?php endif; ?>
                 </ul>
             </nav>

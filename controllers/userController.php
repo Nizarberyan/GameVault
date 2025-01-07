@@ -1,7 +1,7 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     require_once "./../classes/" . $class . ".php";
 });
 require_once("./../config/Db.php");
@@ -67,9 +67,21 @@ class userController
             exit();
         }
     }
+
+    public function usersRendering()
+    {
+        $Users = new User($this->pdo);
+        $users = $Users->usersRendering();
+        $reverseRole = function ($role) {
+            return $role === 'Admin' ? 'User' : 'Admin';
+        };
+        include "./../pages/dashboard.php";
+    }
 }
 
+$userController = new userController();
 if (isset($_GET['action'])) {
-    $userController = new userController();
     $userController->request_handler();
+} else {
+    $userController->usersRendering();
 }

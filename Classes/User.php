@@ -128,4 +128,10 @@ class User
             return false;
         }
     }
+
+    public function usersRendering(){
+        $users = $this->pdo->prepare("SELECT full_name, user_id, role FROM users");
+        $users->execute();
+        return $users->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

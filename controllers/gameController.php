@@ -119,7 +119,7 @@ class gameController
             }
 
             $newGame->addGame($target_dir, $additional_img);
-            $successMessage = "Game has been deleted seccussfuly!!";
+            $successMessage = "Game has been Added successfully!!";
             $this->redirect("Success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -158,7 +158,7 @@ class gameController
             }
             $newGame = new Game($this->pdo);
             $newGame->deleteGame((int)$_POST["game_id"]);
-            $successMessage = "Game has been deleted seccussfuly!!";
+            $successMessage = "Game has been deleted successfully!!";
             $this->redirect("Success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -201,7 +201,7 @@ class gameController
 
             $newGame = new Game($this->pdo);
             $newGame->updateGame($target_dir, $additional_img);
-            $successMessage = "Game has been updated seccussfuly!!";
+            $successMessage = "Game has been updated successfully!!";
             $this->redirect("Success", $successMessage, $path);
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();

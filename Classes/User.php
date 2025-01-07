@@ -115,17 +115,17 @@ class User
         $stmt->bindParam(3, $password);
         return $stmt->execute();
     }
-    public function loginUser($email, $password)
-    {
+    public function login($email, $password) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->bindParam(1, $email);
-        $stmt->execute();
+        $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user && password_verify($password, $user['user_psw'])) {
-            return $user['user_id'];
-        } else {
-            return false;
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+            return true;
         }
+        return false;
     }
 }

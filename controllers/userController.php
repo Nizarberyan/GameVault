@@ -1,11 +1,27 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/../config/Db.php';
+require_once __DIR__ . '/../Classes/User.php';
 
-spl_autoload_register(function ($class) {
-    require_once "./../classes/" . $class . ".php";
-});
-require_once("./../config/Db.php");
-// require_once("./../classes/Game.php");
+session_start();
+
+$pdo = Db::getInstance();
+$user = new User($pdo);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    if ($user->login($email, $password)) {
+        $_SESSION['Success'] = true;
+        $_SESSION['Message'] = "Welcome back!";
+        header('Location: ./../pages/home.php');
+        exit();
+    } else {
+        $_SESSION['Error'] = true;
+        $_SESSION['Message'] = "Invalid email or password";
+        header('Location: ./../pages/login.php');
+        exit();
+    }
+}
 
 class userController
 {
@@ -77,6 +93,23 @@ class userController
         };
         include "./../pages/dashboard.php";
     }
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'destroy') {
+
+    $_SESSION = array();
+
+
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), '', time() - 3600, '/');
+    }
+
+
+    session_destroy();
+
+
+    header('Location: ./../pages/login.php');
+    exit();
 }
 
 $userController = new userController();

@@ -24,7 +24,7 @@ include_once("./../pages/header.php");
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -42,7 +42,7 @@ include_once("./../pages/header.php");
 
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -60,7 +60,7 @@ include_once("./../pages/header.php");
 
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -78,7 +78,7 @@ include_once("./../pages/header.php");
 
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -101,7 +101,7 @@ include_once("./../pages/header.php");
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -119,7 +119,7 @@ include_once("./../pages/header.php");
 
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -137,7 +137,7 @@ include_once("./../pages/header.php");
 
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>
@@ -155,7 +155,7 @@ include_once("./../pages/header.php");
 
                 <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
                     <div>
-                        <img src='./../assests/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
                         <h3 class='text-lg font-bold mb-2'>Tataros</h3>
                         <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
                         <div class='text-sm'>

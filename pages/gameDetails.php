@@ -1,83 +1,164 @@
 <?php require_once("./../pages/header.php") ?>
 
-<div class="game-page bg-[var(--background)] p-6 rounded shadow">
-    <div class="game-details">
-        <div class="game-header mb-6">
-            <img src="<?= $game_img ?>" alt="Game Banner" class="w-full h-[50vh] object-cover rounded">
+<div class="game-page max-w-7xl mx-auto p-4 md:p-6">
+    <div class="relative mb-6">
+        <img src="<?= $game_img ?>" alt="Game Banner" class="w-full h-[50vh] object-cover rounded-xl">
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-[var(--background)] to-transparent">
+            <h2 class="text-3xl font-bold mb-2"><?= $game_name ?></h2>
+            <div class="flex items-center gap-2">
+                <span class="text-yellow-400">★</span>
+                <span class="text-lg"><?= $rating ?>/100</span>
+            </div>
         </div>
-        <div class="game-screenshot w-full lg:w-full flex gap-5 items-center justify-center">
-            <img src="<?= $url_1 ?>" alt="Game Screenshot" class="w-full h-60 object-cover rounded">
-            <img src="<?= $url_2 ?>" alt="Game Screenshot" class="w-full h-60 object-cover rounded">
-        </div>
-        <div class="flex flex-col lg:flex-row gap-6 mt-5">
-            <div class="flex-1">
-                <h2 class="text-2xl font-bold mb-2"><?= $game_name ?></h2>
-                <p class="text-sm mb-4"><?= $game_desc ?></p>
-                <div class="text-sm space-y-2">
-                    <p><strong>Rating:</strong> <?= $rating . "/100" ?></p>
-                    <p><strong>Release Date:</strong> <?= $release_date ?></p>
-                    <p><strong>Developer:</strong> <?= $developer ?></p>
-                    <p><strong>Publisher:</strong> <?= $publisher ?></p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <img src="<?= $url_1 ?>" alt="Game Screenshot" class="w-full h-60 object-cover rounded-lg hover:opacity-90 transition-all">
+        <img src="<?= $url_2 ?>" alt="Game Screenshot" class="w-full h-60 object-cover rounded-lg hover:opacity-90 transition-all">
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 bg-[var(--secondary)] p-6 rounded-lg flex flex-col justify-between">
+            <div>
+                <p class="text-lg mb-6"><?= htmlspecialchars($game_desc) ?></p>
+                <br>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <p class="mb-2"><span class="font-semibold">Release Date:</span> <?= $release_date ?></p>
+                        <p><span class="font-semibold">Developer:</span> <?= $developer ?></p>
+                    </div>
+                    <div>
+                        <p class="mb-2"><span class="font-semibold">Publisher:</span> <?= $publisher ?></p>
+                        <p><span class="font-semibold">Rating:</span> <?= $rating ?>/100</p>
+                    </div>
                 </div>
-                <button class="w-full lg:w-auto px-4 py-2 mt-4 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]">
+            </div>
+
+            <div>
+                <button class="w-full lg:w-auto px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
                     Add to Your Library
                 </button>
             </div>
         </div>
-    </div>
 
-    <div class="reviews mt-8 bg-[var(--secondary)] p-4 rounded">
-        <h3 class="text-xl font-bold mb-4">Reviews & Comments</h3>
-        <form action="#" method="POST" class="mb-4">
-            <textarea name="comment" class="w-full p-2 border rounded mb-2 text-[var(--secondary)]" placeholder="Write your review..." rows="4"></textarea>
-            <select name="rating" class="w-full p-2 border rounded mb-2 bg-[var(--secondary)]">
-                <option value="" disabled selected>Rate the Game</option>
-                <option value="1">1 - Terrible</option>
-                <option value="2">2 - Poor</option>
-                <option value="3">3 - Average</option>
-                <option value="4">4 - Good</option>
-                <option value="5">5 - Excellent</option>
-            </select>
-            <button type="submit" class="w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]">
-                Submit Review
-            </button>
-        </form>
-        <div class="review-list space-y-4 bg-[var(--accent)] p-4 h-60 overflow-y-scroll rounded scrollbar-0">
-            <div class="review p-4 rounded bg-[var(--background)] text-[var(--text)]">
-                <p class="text-sm font-bold">User123 <span class="text-[var(--primary)]">⭐⭐⭐⭐⭐</span></p>
-                <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
-            </div>
-            <div class="review p-4 rounded bg-[var(--background)] text-[var(--text)]">
-                <p class="text-sm font-bold">Gamer456 <span class="text-[var(--primary)]">⭐⭐⭐⭐</span></p>
-                <p class="text-sm">Pretty solid game, but some bugs need fixing.</p>
-            </div>
-            <div class="review p-4 rounded bg-[var(--background)] text-[var(--text)]">
-                <p class="text-sm font-bold">Player789 <span class="text-[var(--primary)]">⭐⭐⭐⭐⭐</span></p>
-                <p class="text-sm">Fantastic! One of the best games I’ve played this year.</p>
-            </div>
-            <div class="review p-4 rounded bg-[var(--background)] text-[var(--text)]">
-                <p class="text-sm font-bold">GamerGirl42 <span class="text-[var(--primary)]">⭐⭐⭐</span></p>
-                <p class="text-sm">Good game, but it needs more content and better optimization.</p>
+        <div class="bg-[var(--secondary)] p-6 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">Reviews & Comments</h3>
+
+            <form action="#" method="POST" class="mb-6">
+                <textarea
+                    name="comment"
+                    class="w-full p-4 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
+                    placeholder="Write your review..."
+                    rows="4"></textarea>
+
+                <select name="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
+                    <option value="" disabled selected>Rate the Game</option>
+                    <option value="5">★★★★★ Excellent</option>
+                    <option value="4">★★★★☆ Very Good</option>
+                    <option value="3">★★★☆☆ Good</option>
+                    <option value="2">★★☆☆☆ Fair</option>
+                    <option value="1">★☆☆☆☆ Poor</option>
+                </select>
+
+                <button type="submit" class="w-full py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
+                    Submit Review
+                </button>
+            </form>
+
+            <div class="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar">
+                <div class="bg-[var(--background)] p-4 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <h4 class="font-bold">User123</h4>
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
+                </div>
+                <div class="bg-[var(--background)] p-4 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <h4 class="font-bold">User123</h4>
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
+                </div>
+                <div class="bg-[var(--background)] p-4 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <h4 class="font-bold">User123</h4>
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
+                </div>
+                <div class="bg-[var(--background)] p-4 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <h4 class="font-bold">User123</h4>
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
+                </div>
+                <div class="bg-[var(--background)] p-4 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <h4 class="font-bold">Gamer456</h4>
+                        <span class="text-yellow-400">★★★★</span>
+                    </div>
+                    <p class="text-sm">Pretty solid game, but some bugs need fixing.</p>
+                </div>
+                <div class="bg-[var(--background)] p-4 rounded-lg">
+                    <div class="flex justify-between mb-2">
+                        <h4 class="font-bold">Player789</h4>
+                        <span class="text-yellow-400">★★★★★</span>
+                    </div>
+                    <p class="text-sm">Fantastic! One of the best games I've played this year.</p>
+                </div>
             </div>
         </div>
-
     </div>
 
-    <div class="live-chat mt-8 p-4 rounded bg-[var(--secondary)] text-[var(--text)]">
+    <div class="mt-6 bg-[var(--secondary)] p-6 rounded-lg">
         <h3 class="text-xl font-bold mb-4">Live Chat</h3>
-        <div class="chat-messages mb-4 h-60 overflow-y-scroll p-2 rounded bg-[var(--primary)]">
-            <div class="message mb-2">
-                <p class="text-sm font-bold">User789:</p>
-                <p class="text-sm">Anyone else excited for the next update?</p>
-            </div>
-            <div class="message mb-2">
-                <p class="text-sm font-bold">Gamer123:</p>
-                <p class="text-sm">Yes! I hope they fix the multiplayer lag.</p>
+
+        <div class="bg-[var(--background)] rounded-lg p-4 mb-4 h-[300px] overflow-y-auto custom-scrollbar">
+            <div class="space-y-4">
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
+                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
+                </div>
+                <div class="message">
+                    <p class="text-sm font-bold text-[var(--accent)]">Gamer123:</p>
+                    <p class="text-sm ml-4 mt-1">Yes! I hope they fix the multiplayer lag.</p>
+                </div>
             </div>
         </div>
-        <form action="#" method="POST" class="flex">
-            <input type="text" name="message" class="flex-1 p-2 border rounded-l" placeholder="Type a message...">
-            <button type="submit" class="px-4 bg-[var(--primary)] text-white rounded-r hover:bg-[var(--accent)]">
+
+        <form action="#" method="POST" class="flex gap-2">
+            <input
+                type="text"
+                name="message"
+                class="flex-1 p-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
+                placeholder="Type a message...">
+            <button type="submit" class="px-6 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
                 Send
             </button>
         </form>

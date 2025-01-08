@@ -41,7 +41,7 @@
                         <li><a href="./../pages/signup.php" class="hover:underline">signup</a></li>
                     <?php endif; ?>
 
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "admin"): ?>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin"): ?>
                         <li><a href="./../controllers/userController.php" class="hover:underline">Dashboard</a></li>
                     <?php endif; ?>
 

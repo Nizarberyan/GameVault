@@ -43,7 +43,7 @@
                 <div class="flex-1">
                     <label class="block text-sm font-medium mb-1">Game Category</label>
                     <select name="category" id="category" class="w-full p-2 rounded bg-[var(--background)] text-white">
-                        <option disabled>-- Select a category --</option>
+                        <option disabled selected value="">-- Select a category --</option>
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                     </select>
@@ -71,7 +71,6 @@
     function openModal() {
         document.getElementById('gameForm').classList.remove('hidden');
     }
-
     function closeModal() {
         document.getElementById('gameForm').classList.add('hidden');
     }

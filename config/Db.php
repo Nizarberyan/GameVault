@@ -7,10 +7,10 @@ class Db
 
     private function __construct()
     {
-        $servername = "localhost";
-        $username = "root";
-        $password = "analikayn";
-        $dbname = "gamevault";
+        $servername = "buktjltjz2inoccisg5h-mysql.services.clever-cloud.com";
+        $username = "uja93ghmkwgm6lpp";
+        $password = "CpRFnOsptepbqIedcejc";
+        $dbname = "buktjltjz2inoccisg5h";
 
         $dsn = "mysql:host=$servername;dbname=$dbname";
         $options = [

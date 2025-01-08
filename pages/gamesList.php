@@ -1,6 +1,6 @@
 <?php require_once("./../pages/header.php") ?>
 
-<div class="container mx-auto min-h-[85vh] p-5 relative">
+<div class="container mx-auto min-h-[90vh] p-5 relative">
     <div class="absolute top-5 right-5 rotate-180">
         <a href="./../pages/dashboard.php">
             <svg width="50px" height="50px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -66,7 +66,7 @@
                         <p>Publisher: <?= $publisher ?></p>
                     </div>
                 </div>
-                <button onclick="openModal()" class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Edit</button>
+                <button class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'><a href="./../controllers/gameController.php?action=editSession&game_id=<?= $game_id ?>">Edit</a></button>
                 <form action='./../controllers/gameController.php?action=deleteGame' method='POST'>
                     <input type='hidden' name='game_id' value='<?= $game_id ?>'>
                     <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Delete</button>
@@ -77,4 +77,3 @@
 </div>
 
 <?php require_once("./../pages/footer.php") ?>
-<?php require_once("./../pages/gameForm.php") ?>

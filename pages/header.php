@@ -31,7 +31,7 @@
             <h1 class="text-2xl font-bold">Game Collection Platform</h1>
             <nav>
                 <ul class="flex space-x-4">
-                    <li><a href="./../pages/home.php" class="hover:underline">Home</a></li>
+                    <li><a href="./../controllers/gameController.php?action=home" class="hover:underline">Home</a></li>
                     <li><a href="library.php" class="hover:underline">Library</a></li>
                     <li><a href="./../controllers/userController.php?action=on" class="hover:underline">Profile</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>

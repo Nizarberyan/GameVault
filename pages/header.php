@@ -19,6 +19,7 @@
         }
 
         body {
+            user-select: none;
             background-color: var(--background);
             color: var(--text);
         }

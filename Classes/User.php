@@ -10,11 +10,12 @@ class User
 
     public function accRender()
     {
-        $user_id = 3;
-        $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :user_id;");
-        $info->bindParam(":user_id", $user_id);
+        $user_id = $_SESSION['user_id'];
+        $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = ?;");
+        $info->bindParam(1, $user_id);
         $info->execute();
         $row = $info->fetch(PDO::FETCH_ASSOC);
+
         if ($row) {
             extract($row);
         } else {
@@ -25,7 +26,7 @@ class User
 
     public function accEdit()
     {
-        $user_id = 3;
+        $user_id = $_SESSION['user_id'];
         $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :user_id;");
         $info->bindParam(":user_id", $user_id, PDO::PARAM_STR);
         $info->execute();
@@ -104,5 +105,35 @@ class User
         $update->execute();
 
         header("Location: ./../controllers/userController.php?action=on");
+    }
+
+    public function insertUser($username, $email, $password)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO users (full_name, email, user_psw) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $username);
+        $stmt->bindParam(2, $email);
+        $stmt->bindParam(3, $password);
+        return $stmt->execute();
+    }
+    public function login($email, $password)
+    {
+        $stmt = $this->pdo->prepare("SELECT user_id, user_psw, role FROM users WHERE email = ?");
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && password_verify($password, $user['user_psw'])) {
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+            return true;
+        }
+        return false;
+    }
+
+    public function usersRendering()
+    {
+        $users = $this->pdo->prepare("SELECT full_name, user_id, role FROM users");
+        $users->execute();
+        return $users->fetchAll(PDO::FETCH_ASSOC);
     }
 }

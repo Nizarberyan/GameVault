@@ -3,25 +3,21 @@
 <div class="game-page bg-[var(--background)] p-6 rounded shadow">
     <div class="game-details">
         <div class="game-header mb-6">
-            <img src="./../assets/67793c09a598a.jpg" alt="Game Banner" class="w-full h-[40vh] object-cover rounded">
+            <img src="<?= $game_img ?>" alt="Game Banner" class="w-full h-[50vh] object-cover rounded">
         </div>
         <div class="game-screenshot w-full lg:w-full flex gap-5 items-center justify-center">
-            <img src="https://via.placeholder.com/400x300" alt="Game Screenshot" class="w-full h-60 object-cover rounded">
-            <img src="https://via.placeholder.com/400x300" alt="Game Screenshot" class="w-full h-60 object-cover rounded">
+            <img src="<?= $url_1 ?>" alt="Game Screenshot" class="w-full h-60 object-cover rounded">
+            <img src="<?= $url_2 ?>" alt="Game Screenshot" class="w-full h-60 object-cover rounded">
         </div>
-        <div class="flex flex-col lg:flex-row gap-6">
+        <div class="flex flex-col lg:flex-row gap-6 mt-5">
             <div class="flex-1">
-                <h2 class="text-2xl font-bold mb-2">Game Title</h2>
-                <p class="text-sm mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod, erat non hendrerit mollis, enim
-                    lectus efficitur lorem, id fringilla tortor ligula id nunc. Integer condimentum tortor et felis vehicula, vel
-                    bibendum metus aliquam.
-                </p>
+                <h2 class="text-2xl font-bold mb-2"><?= $game_name ?></h2>
+                <p class="text-sm mb-4"><?= $game_desc ?></p>
                 <div class="text-sm space-y-2">
-                    <p><strong>Rating:</strong> 95/100</p>
-                    <p><strong>Release Date:</strong> January 5, 2025</p>
-                    <p><strong>Developer:</strong> Game Dev Studios</p>
-                    <p><strong>Publisher:</strong> Game Pub Inc.</p>
+                    <p><strong>Rating:</strong> <?= $rating . "/100" ?></p>
+                    <p><strong>Release Date:</strong> <?= $release_date ?></p>
+                    <p><strong>Developer:</strong> <?= $developer ?></p>
+                    <p><strong>Publisher:</strong> <?= $publisher ?></p>
                 </div>
                 <button class="w-full lg:w-auto px-4 py-2 mt-4 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]">
                     Add to Your Library

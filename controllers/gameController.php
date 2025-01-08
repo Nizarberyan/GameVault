@@ -1,6 +1,6 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-spl_autoload_register(function($class){
+spl_autoload_register(function ($class) {
     require_once "./../classes/" . $class . ".php";
 });
 require_once("./../config/Db.php");
@@ -43,6 +43,10 @@ class gameController
 
             case "home":
                 $this->homeRendering();
+                break;
+
+            case "gameDetails":
+                $this->gameDetails();
                 break;
         }
     }
@@ -214,13 +218,29 @@ class gameController
         }
     }
 
-    private function homeRendering(){
+    private function homeRendering()
+    {
 
 
         $path = "./../pages/home.php";
         try {
             $games = new Game($this->pdo);
             $info = $games->gamesRenderer();
+            include $path;
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
+    }
+
+    private function gameDetails()
+    {
+        $path = "./../pages/gameDetails.php";
+        try {
+            $games = new Game($this->pdo);
+            $info = $games->gameDetails($_GET['id']);
+            extract($info);
             include $path;
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();

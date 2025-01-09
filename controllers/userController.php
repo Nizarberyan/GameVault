@@ -7,21 +7,7 @@ session_start();
 $pdo = Db::getInstance();
 $user = new User($pdo);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-    if ($user->login($email, $password)) {
-        $_SESSION['Success'] = true;
-        $_SESSION['Message'] = "Welcome back!";
-        header('Location: ./../pages/home.php');
-        exit();
-    } else {
-        $_SESSION['Error'] = true;
-        $_SESSION['Message'] = "Invalid email or password";
-        header('Location: ./../pages/login.php');
-        exit();
-    }
-}
+
 
 class userController
 {
@@ -39,19 +25,33 @@ class userController
 
         switch ($this->action) {
             case "on":
-                $this->accRender();
+                if (isset($_SESSION['user_id'])) {
+                    $this->accRender();
+                } else {
+                    header('Location: ./../pages/login.php');
+                    exit();
+                }
                 break;
 
             case "accEdit":
                 $this->accEdit();
                 break;
+            case "login":
+                $this->login();
+                break;
 
-            case "accModify":
+            case "modify":
                 $this->accModify();
                 break;
         }
     }
-
+    public function login()
+    {
+        $user = new User($this->pdo);
+        $user->login($_POST['email'], $_POST['password']);
+        header("Location: ./../controllers/gameController.php?action=home");
+        exit();
+    }
     private function accRender()
     {
         $user = new User($this->pdo);
@@ -72,10 +72,24 @@ class userController
 
     private function accModify()
     {
+
         try {
             $user = new User($this->pdo);
-            if ($user->validation()) { //validation function need some improvement and fixing!!!!
+            if ($user->validation()) {
+                // Retrieve inputs
+                $full_name = $_POST['full_name'];
+                $email = $_POST['email'];
+                $bio = $_POST['bio'] ?? '';
+                $user_id = $_POST['user_id'];
+                $old_profile_img = $_POST['old_profile_img'];
+
+
+
                 $user->accModify();
+
+
+                header("Location: ./../controllers/userController.php?action=on");
+                exit();
             }
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();

@@ -1,6 +1,5 @@
 <?php
-require_once("./../pages/header.php");
-// require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../pages/header.php';
 require_once __DIR__ . '/../config/Db.php';
 require_once __DIR__ . '/../Classes/User.php';
 $pdo = Db::getInstance();
@@ -9,13 +8,18 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+if (isset($_SESSION['user_id'])) {
+    header("Location: ./../controllers/gameController.php?action=home");
+    exit;
+}
+
 
 ?>
 
 <div class="min-h-screen flex items-center justify-center">
     <div class="bg-[var(--secondary)] p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-        <form action="./../controllers/userController.php" method="POST">
+        <form action="./../controllers/userController.php?action=login" method="POST">
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-2">Email</label>
                 <input type="email" name="email" class="w-full p-2 rounded bg-[var(--background)] border border-[var(--accent)]" required>

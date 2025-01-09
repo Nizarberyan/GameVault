@@ -22,154 +22,62 @@ include_once("./../pages/header.php");
         <div class="mb-8">
             <h3 class="text-2xl font-semibold text-[var(--text)] mb-4">Action</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
+                <?php foreach ($info as $game):
+                    extract($game);
+                    if ($category === "Action"): ?>
+                        <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                            <div>
+                                <a href="./../controllers/gameController.php?action=gameDetails&id=<?= $game_id ?>">
+                                    <img src='<?= $game_img ?>' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                                    <h3 class='text-lg font-bold mb-2'><?= $game_name ?></h3>
+                                    <p class='text-sm mb-4 line-clamp-3'><?= substr($game_desc, 0, 130) . "..." ?></p>
+                                    <br>
+                                    <div class='text-sm'>
+                                        <p>Rating: <?= $rating . "/100" ?></p>
+                                        <p>Release Date: <?= $release_date ?></p>
+                                        <p>Developer: <?= $developer ?></p>
+                                        <p>Publisher: <?= $publisher ?></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <form action='' method='POST'>
+                                <input type='hidden' name='game_title' value=''>
+                                <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                            </form>
                         </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
-
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
-                        </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
-
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
-                        </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
-
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
-                        </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
+                    <?php endif ?>
+                <?php endforeach ?>
             </div>
         </div>
 
         <div>
             <h3 class="text-2xl font-semibold text-[var(--text)] mb-4">Adventure</h3>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
+                <?php foreach ($info as $game):
+                    extract($game);
+                    if ($category === "Adventure"): ?>
+                        <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
+                            <div>
+                                <a href="./../controllers/gameController.php?action=gameDetails&id=<?= $game_id ?>">
+                                    <img src='<?= $game_img ?>' alt='' class='w-full h-40 object-cover rounded mb-4'>
+                                    <h3 class='text-lg font-bold mb-2'><?= $game_name ?></h3>
+                                    <p class='text-sm mb-4 line-clamp-3'><?= substr($game_desc, 0, 130) . "..." ?></p>
+                                    <br>
+                                    <div class='text-sm'>
+                                        <p>Rating: <?= $rating . "/100" ?></p>
+                                        <p>Release Date: <?= $release_date ?></p>
+                                        <p>Developer: <?= $developer ?></p>
+                                        <p>Publisher: <?= $publisher ?></p>
+                                    </div>
+                                </a>
+                            </div>
+                            <form action='' method='POST'>
+                                <input type='hidden' name='game_title' value=''>
+                                <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                            </form>
                         </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
-
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
-                        </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
-
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
-                        </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
-
-                <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                    <div>
-                        <img src='./../assets/6777bace44d11.jpg' alt='' class='w-full h-40 object-cover rounded mb-4'>
-                        <h3 class='text-lg font-bold mb-2'>Tataros</h3>
-                        <p class='text-sm mb-4 line-clamp-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur, sapiente.</p>
-                        <div class='text-sm'>
-                            <p class='text-[var(--accent)]'>Price: free</p>
-                            <p>Release Date: 2001-01-01</p>
-                            <p>Developer: ana</p>
-                            <p>Publisher: ana ausi</p>
-                        </div>
-                    </div>
-                    <form action='' method='POST'>
-                        <input type='hidden' name='game_title' value=''>
-                        <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
-                    </form>
-                </div>
+                    <?php endif ?>
+                <?php endforeach ?>
             </div>
         </div>
     </section>

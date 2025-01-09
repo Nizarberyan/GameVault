@@ -26,7 +26,7 @@ class User
 
     public function accEdit()
     {
-        $user_id = $_SESSION['user_id'];
+        $user_id = (int) $_SESSION['user_id'];
         $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :user_id;");
         $info->bindParam(":user_id", $user_id, PDO::PARAM_STR);
         $info->execute();
@@ -41,24 +41,28 @@ class User
 
     public function validation()
     {
-        if (empty($_POST['full_name']) || empty($_POST['email']) || empty($_POST['bio'])) {
-            throw new Exception("Full name, email, or bio should not be empty.");
+        $user_id = (int) $_SESSION['user_id'];
+        die($user_id);
+        if (empty($_POST['full_name']) || empty($_POST['email'])) {
+            throw new Exception("Full name OR email should not be empty.");
+        }
+
+        if (!empty($_POST['bio'])) {
+            if (!preg_match("/^[a-zA-Z\s]+$/", $_POST['bio'])) {
+                throw new Exception("Bio must only contain letters and spaces.");
+            }
         }
 
         if (!preg_match("/^[a-zA-Z\s]+$/", $_POST['full_name'])) {
             throw new Exception("Full name must only contain letters and spaces.");
         }
 
-        if (!preg_match("/^[a-zA-Z\s]+$/", $_POST['bio'])) {
-            throw new Exception("Bio must only contain letters and spaces.");
-        }
-
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             throw new Exception("Invalid email format.");
         }
 
-        $emails = $this->pdo->prepare("SELECT email, full_name FROM users;");
-        $emails->execute();
+        $emails = $this->pdo->prepare("SELECT email, full_name FROM users WHERE user_id != ?;");
+        $emails->execute([$user_id]);
         $rows = $emails->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($rows as $row) {

@@ -1,12 +1,16 @@
 <?php
-require_once("./../pages/header.php");
-// require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../pages/header.php';
 require_once __DIR__ . '/../config/Db.php';
 require_once __DIR__ . '/../Classes/User.php';
 $pdo = Db::getInstance();
 $user = new User($pdo);
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: ./../pages/home.php");
+    exit;
 }
 
 

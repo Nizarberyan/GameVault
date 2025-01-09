@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user->login($email, $password)) {
         $_SESSION['Success'] = true;
         $_SESSION['Message'] = "Welcome back!";
-        header('Location: ./../pages/home.php');
+        header('Location: ./../controllers/gameController.php?action=home');
         exit();
     } else {
         $_SESSION['Error'] = true;

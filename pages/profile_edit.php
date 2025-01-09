@@ -42,7 +42,7 @@ include_once("./../pages/header.php");
 
                 <div class="mb-6">
                     <label for="bio" class="block text-sm font-medium text-[var(--text)]">Bio</label>
-                    <textarea id="bio" name="bio" rows="4" required class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><?php echo $bio; ?></textarea>
+                    <textarea id="bio" name="bio" rows="4" class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><?php echo $bio; ?></textarea>
                 </div>
 
                 <div class="flex justify-center">

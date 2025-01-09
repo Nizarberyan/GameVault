@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (isset($_SESSION['user_id'])) {
-    header("Location: ./../pages/home.php");
+    header("Location: ./../controllers/gameController.php?action=home");
     exit;
 }
 

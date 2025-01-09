@@ -3,7 +3,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['user_id']) && $_SERVER['REQUEST_URI'] !== '/GameVault/pages/login.php') {
-
     header("Location: ./../pages/login.php");
 }
 ?>
@@ -27,8 +26,27 @@ if (!isset($_SESSION['user_id']) && $_SERVER['REQUEST_URI'] !== '/GameVault/page
         }
 
         body {
+            user-select: none;
             background-color: var(--background);
             color: var(--text);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: var(--secondary);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
@@ -39,7 +57,7 @@ if (!isset($_SESSION['user_id']) && $_SERVER['REQUEST_URI'] !== '/GameVault/page
             <h1 class="text-2xl font-bold">Game Collection Platform</h1>
             <nav>
                 <ul class="flex space-x-4">
-                    <li><a href="./../pages/home.php" class="hover:underline">Home</a></li>
+                    <li><a href="./../controllers/gameController.php?action=home" class="hover:underline">Home</a></li>
                     <li><a href="library.php" class="hover:underline">Library</a></li>
                     <li><a href="./../controllers/userController.php?action=on" class="hover:underline">Profile</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>

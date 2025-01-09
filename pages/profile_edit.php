@@ -19,7 +19,7 @@ include_once("./../pages/header.php");
         <div class="bg-[var(--primary)] rounded-lg shadow-xl w-full max-w-3xl p-6">
             <h2 class="text-3xl font-semibold text-[var(--text)] text-center mb-6">Edit Profile</h2>
 
-            <form action="./../controllers/userController.php?action=accModify" method="POST" enctype="multipart/form-data">
+            <form action="./../controllers/userController.php?action=modify" method="POST" enctype="multipart/form-data">
                 <div class="flex justify-center mb-6">
                     <label for="profile_image" class="cursor-pointer">
                         <img src="<?= $profile_img; ?>" alt="Profile Picture" id="profileImage" class="w-32 h-32 rounded-full border-4 border-[var(--accent)] mb-4">
@@ -32,17 +32,17 @@ include_once("./../pages/header.php");
 
                 <div class="mb-4">
                     <label for="full_name" class="block text-sm font-medium text-[var(--text)]">Full Name</label>
-                    <input type="text" id="full_name" name="full_name" value="<?= $full_name; ?>" required class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="text" id="full_name" name="full_name" value="<?= $full_name ?? ''; ?>" required class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-[var(--text)]">Email</label>
-                    <input type="email" id="email" name="email" value="<?= $email; ?>" required class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="email" id="email" name="email" value="<?= $email ?? ''; ?>" required class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
                 </div>
 
                 <div class="mb-6">
                     <label for="bio" class="block text-sm font-medium text-[var(--text)]">Bio</label>
-                    <textarea id="bio" name="bio" rows="4" class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><?php echo $bio; ?></textarea>
+                    <textarea id="bio" name="bio" rows="4" class="border-none bg-[var(--background)] mt-1 p-3 block w-full border-2 border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"><?= $bio ?? ''; ?></textarea>
                 </div>
 
                 <div class="flex justify-center">
@@ -52,7 +52,7 @@ include_once("./../pages/header.php");
                 </div>
             </form>
         </div>
-</section>
+    </section>
 </main>
 
 <?php

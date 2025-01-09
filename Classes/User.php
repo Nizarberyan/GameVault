@@ -14,7 +14,7 @@ class User
         $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = ?;");
         $info->bindParam(1, $user_id);
         $info->execute();
-        $row = $info->fetch(PDO::FETCH_ASSOC);
+        $row = $info->fetch();
 
         if ($row) {
             extract($row);
@@ -28,9 +28,9 @@ class User
     {
         $user_id = (int) $_SESSION['user_id'];
         $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :user_id;");
-        $info->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+        $info->bindParam(":user_id", $user_id);
         $info->execute();
-        $row = $info->fetch(PDO::FETCH_ASSOC);
+        $row = $info->fetch();
         if ($row) {
             extract($row);
         } else {
@@ -42,7 +42,7 @@ class User
     public function validation()
     {
         $user_id = (int) $_SESSION['user_id'];
-        die($user_id);
+
         if (empty($_POST['full_name']) || empty($_POST['email'])) {
             throw new Exception("Full name OR email should not be empty.");
         }
@@ -63,7 +63,7 @@ class User
 
         $emails = $this->pdo->prepare("SELECT email, full_name FROM users WHERE user_id != ?;");
         $emails->execute([$user_id]);
-        $rows = $emails->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $emails->fetchAll();
 
         foreach ($rows as $row) {
             if ($row["email"] == $_POST['email'] || $row["full_name"] == $_POST['full_name']) {
@@ -76,6 +76,7 @@ class User
 
     public function accModify()
     {
+
         $full_name = $_POST['full_name'];
         $email = $_POST['email'];
         $bio = $_POST['bio'] ?? '';
@@ -87,7 +88,7 @@ class User
             if (!in_array($_FILES['profile_image']['type'], $allowedTypes)) {
                 throw new Exception("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
             }
-            $target_dir = "./../assests/";
+            $target_dir = "./../assets/";
             $file_extension = strtolower(pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION));
             $unique_file_name = uniqid() . '.' . $file_extension;
             $profile_img = $target_dir . $unique_file_name;
@@ -124,7 +125,7 @@ class User
         $stmt = $this->pdo->prepare("SELECT user_id, user_psw, role FROM users WHERE email = ?");
         $stmt->bindParam(1, $email);
         $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch();
         if ($user && password_verify($password, $user['user_psw'])) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
@@ -138,6 +139,6 @@ class User
     {
         $users = $this->pdo->prepare("SELECT full_name, user_id, role FROM users");
         $users->execute();
-        return $users->fetchAll(PDO::FETCH_ASSOC);
+        return $users->fetchAll();
     }
 }

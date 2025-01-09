@@ -45,24 +45,30 @@
             <h3 class="text-xl font-bold mb-4">Reviews & Comments</h3>
 
             <form action="#" method="POST" class="mb-6">
-                <textarea
-                    name="comment"
-                    class="w-full p-4 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
-                    placeholder="Write your review..."
-                    rows="4"></textarea>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <textarea
+                        name="comment"
+                        class="w-full p-4 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
+                        placeholder="Write your review..."
+                        rows="4"></textarea>
 
-                <select name="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
-                    <option value="" disabled selected>Rate the Game</option>
-                    <option value="5">★★★★★ Excellent</option>
-                    <option value="4">★★★★☆ Very Good</option>
-                    <option value="3">★★★☆☆ Good</option>
-                    <option value="2">★★☆☆☆ Fair</option>
-                    <option value="1">★☆☆☆☆ Poor</option>
-                </select>
+                    <select name="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
+                        <option value="" disabled selected>Rate the Game</option>
+                        <option value="5">★★★★★ Excellent</option>
+                        <option value="4">★★★★☆ Very Good</option>
+                        <option value="3">★★★☆☆ Good</option>
+                        <option value="2">★★☆☆☆ Fair</option>
+                        <option value="1">★☆☆☆☆ Poor</option>
+                    </select>
 
-                <button type="submit" class="w-full py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
-                    Submit Review
-                </button>
+                    <button type="submit" class="w-full py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
+                        Submit Review
+                    </button>
+                <?php else: ?>
+                    <div class="w-full p-4 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)] text-gray-500">
+                        Please log in to submit a review
+                    </div>
+                <?php endif; ?>
             </form>
 
             <div class="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar">
@@ -153,14 +159,20 @@
         </div>
 
         <form action="#" method="POST" class="flex gap-2">
-            <input
-                type="text"
-                name="message"
-                class="flex-1 p-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
-                placeholder="Type a message...">
-            <button type="submit" class="px-6 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
-                Send
-            </button>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <input
+                    type="text"
+                    name="message"
+                    class="flex-1 p-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
+                    placeholder="Type a message...">
+                <button type="submit" class="px-6 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
+                    Send
+                </button>
+            <?php else: ?>
+                <div class="flex-1 p-3 rounded-lg bg-[var(--background)] border border-[var(--accent)] text-gray-500">
+                    Please log in to send a message
+                </div>
+            <?php endif; ?>
         </form>
     </div>
 </div>

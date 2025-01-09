@@ -114,7 +114,7 @@
     <div class="mt-6 bg-[var(--secondary)] p-6 rounded-lg relative">
         <h3 class="text-xl font-bold mb-4">Live Chat</h3>
 
-        <div class="bg-[var(--background)] rounded-lg p-4 mb-4 h-[300px] overflow-y-auto custom-scrollbar">
+        <div id="scroller" class="bg-[var(--background)] rounded-lg p-4 mb-4 h-[300px] overflow-y-auto custom-scrollbar">
             <div class="absolute top-3 right-3 cursor-pointer" id="refresh">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 3V8M3 8H8M3 8L6 5.29168C7.59227 3.86656 9.69494 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.71683 21 4.13247 18.008 3.22302 14" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -133,8 +133,8 @@
 
         <form id="chatForm" method="POST" class="flex gap-2">
             <input type="hidden" name="game_id" id="game_id" value="<?= $game_id ?>">
-            <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user_id'] ?>">
             <?php if (isset($_SESSION['user_id'])): ?>
+                <input type="hidden" name="user_id" id="user_id" value="<?= $_SESSION['user_id'] ?>">
                 <input
                     type="text"
                     name="message"
@@ -160,6 +160,12 @@
 <?php require_once("./../pages/footer.php") ?>
 
 <script defer>
+    const container = document.querySelector('#scroller');
+
+    container.scrollTo({
+        top: container.scrollHeight,
+        behavior: 'smooth'
+    });
     document.addEventListener("DOMContentLoaded", function() {
         let chatForm = document.querySelector("#chatForm");
         let message = chatForm.querySelector("#message");
@@ -175,7 +181,7 @@
                 if (this.readyState === 4 && this.status === 200) {
                     console.log("Message send successfuly");
                     message.value = "";
-                    // getRequest();
+                    getRequest();
                 }
             };
 
@@ -211,6 +217,10 @@
                                                     <p class="text-sm ml-4 mt-1">${e.message}</p>
                                                 </div>`;
                         document.querySelector("#msgs_container").innerHTML += messageTemplate;
+                        container.scrollTo({
+                            top: container.scrollHeight,
+                            behavior: 'smooth'
+                        });
                     });
                 }
             };

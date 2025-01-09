@@ -78,7 +78,7 @@ class User
     {
         $full_name = $_POST['full_name'];
         $email = $_POST['email'];
-        $bio = $_POST['bio'];
+        $bio = $_POST['bio'] ?? '';
         $user_id = $_POST['user_id'];
         $old_profile_img = $_POST['old_profile_img'];
 

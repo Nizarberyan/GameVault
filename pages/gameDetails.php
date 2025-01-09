@@ -85,38 +85,13 @@
 
         <div class="bg-[var(--background)] rounded-lg p-4 mb-4 h-[300px] overflow-y-auto custom-scrollbar">
             <div class="space-y-4">
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">User789:</p>
-                    <p class="text-sm ml-4 mt-1">Anyone else excited for the next update?</p>
-                </div>
-                <div class="message">
-                    <p class="text-sm font-bold text-[var(--accent)]">Gamer123:</p>
-                    <p class="text-sm ml-4 mt-1">Yes! I hope they fix the multiplayer lag.</p>
-                </div>
+                <?php foreach ($chat_data as $row):
+                    extract($row); ?>
+                    <div class="message">
+                        <p class="text-sm font-bold text-[var(--accent)]"><?= $full_name ?>:</p>
+                        <p class="text-sm ml-4 mt-1"><?= $message ?></p>
+                    </div>
+                <?php endforeach; ?>
             </div>
         </div>
 

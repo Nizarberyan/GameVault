@@ -2,9 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-if (!isset($_SESSION['user_id']) && !isset($_GET['action']) && $_SERVER['REQUEST_URI'] !== '/gamevault/pages/login.php' && $_SERVER['REQUEST_URI'] !== '/gamevault/pages/signup.php') {
-    header("Location: ./../pages/login.php");
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

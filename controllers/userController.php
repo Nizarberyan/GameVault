@@ -36,13 +36,22 @@ class userController
             case "accEdit":
                 $this->accEdit();
                 break;
+            case "login":
+                $this->login();
+                break;
 
             case "modify":
                 $this->accModify();
                 break;
         }
     }
-
+    public function login()
+    {
+        $user = new User($this->pdo);
+        $user->login($_POST['email'], $_POST['password']);
+        header("Location: ./../controllers/gameController.php?action=home");
+        exit();
+    }
     private function accRender()
     {
         $user = new User($this->pdo);

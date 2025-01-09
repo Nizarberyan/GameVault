@@ -19,7 +19,7 @@ if (isset($_SESSION['user_id'])) {
 <div class="min-h-screen flex items-center justify-center">
     <div class="bg-[var(--secondary)] p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-        <form action="./../controllers/userController.php" method="POST">
+        <form action="./../controllers/userController.php?action=login" method="POST">
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-2">Email</label>
                 <input type="email" name="email" class="w-full p-2 rounded bg-[var(--background)] border border-[var(--accent)]" required>

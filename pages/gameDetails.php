@@ -29,6 +29,8 @@
                     </div>
                     <div>
                         <p class="mb-2"><span class="font-semibold">Publisher:</span> <?= $publisher ?></p>
+
+                        <p class="mb-4"><span class="font-semibold">GameVault Rating:</span> <?= $totalPoints / $divisor ?>/100</p>
                         <p class="flex items-center">
                             <span class="inline-block bg-white p-1 rounded">
                                 <img src="https://logodix.com/logo/2197892.png" alt="Metacritic Logo" class="h-10 w-10">

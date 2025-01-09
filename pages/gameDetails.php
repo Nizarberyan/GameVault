@@ -53,11 +53,11 @@
 
                 <select name="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
                     <option value="" disabled selected>Rate the Game</option>
-                    <option value="5">★★★★★ Excellent</option>
-                    <option value="4">★★★★☆ Very Good</option>
-                    <option value="3">★★★☆☆ Good</option>
-                    <option value="2">★★☆☆☆ Fair</option>
-                    <option value="1">★☆☆☆☆ Poor</option>
+                    <option value="★★★★★">★★★★★ Excellent</option>
+                    <option value="★★★★☆">★★★★☆ Very Good</option>
+                    <option value="★★★☆☆">★★★☆☆ Good</option>
+                    <option value="★★☆☆☆">★★☆☆☆ Fair</option>
+                    <option value="★☆☆☆☆">★☆☆☆☆ Poor</option>
                 </select>
 
                 <button type="submit" class="w-full py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
@@ -66,48 +66,16 @@
             </form>
 
             <div class="space-y-4 max-h-[400px] overflow-y-auto custom-scrollbar">
-                <div class="bg-[var(--background)] p-4 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <h4 class="font-bold">User123</h4>
-                        <span class="text-yellow-400">★★★★★</span>
+                <?php foreach ($reviews as $review):
+                    extract($review); ?>
+                    <div class="bg-[var(--background)] p-4 rounded-lg">
+                        <div class="flex justify-between mb-2">
+                            <h4 class="font-bold"><?= $full_name ?></h4>
+                            <span class="text-yellow-400"><?= $rating_review ?></span>
+                        </div>
+                        <p class="text-sm"><?= $review_desc ?></p>
                     </div>
-                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
-                </div>
-                <div class="bg-[var(--background)] p-4 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <h4 class="font-bold">User123</h4>
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
-                </div>
-                <div class="bg-[var(--background)] p-4 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <h4 class="font-bold">User123</h4>
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
-                </div>
-                <div class="bg-[var(--background)] p-4 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <h4 class="font-bold">User123</h4>
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-sm">This game is amazing! I love the graphics and gameplay.</p>
-                </div>
-                <div class="bg-[var(--background)] p-4 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <h4 class="font-bold">Gamer456</h4>
-                        <span class="text-yellow-400">★★★★</span>
-                    </div>
-                    <p class="text-sm">Pretty solid game, but some bugs need fixing.</p>
-                </div>
-                <div class="bg-[var(--background)] p-4 rounded-lg">
-                    <div class="flex justify-between mb-2">
-                        <h4 class="font-bold">Player789</h4>
-                        <span class="text-yellow-400">★★★★★</span>
-                    </div>
-                    <p class="text-sm">Fantastic! One of the best games I've played this year.</p>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </div>

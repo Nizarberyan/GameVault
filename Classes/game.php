@@ -37,7 +37,12 @@ class Game
                 ];
             }
 
+            $reviews = $this->pdo->prepare("SELECT review_desc, full_name, rating_review FROM reviews JOIN users ON users.user_id = reviews.user_id WHERE reviews.game_id = ?;");
+            $reviews->execute([$game_id]);
+            $reviews_data = $reviews->fetchAll();
+
             $info = array_merge($game_info->fetch(), $updatedRows[0], $updatedRows[1]);
+            $info['reviews'] = $reviews_data;
             // var_dump($info);
             // die();
             $this->pdo->commit();

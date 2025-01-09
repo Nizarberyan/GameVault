@@ -37,7 +37,17 @@ class Game
                 ];
             }
 
+            $reviews = $this->pdo->prepare("SELECT review_desc, full_name, rating_review FROM reviews JOIN users ON users.user_id = reviews.user_id WHERE reviews.game_id = ?;");
+            $reviews->execute([$game_id]);
+            $reviews_data = $reviews->fetchAll();
+
+            $messages = $this->pdo->prepare("SELECT message, full_name FROM live_chat JOIN users ON users.user_id = live_chat.user_id WHERE live_chat.game_id = ? ORDER BY live_chat.created_at ASC;");
+            $messages->execute([$game_id]);
+            $chat_data = $messages->fetchAll();
+
             $info = array_merge($game_info->fetch(), $updatedRows[0], $updatedRows[1]);
+            $info['reviews'] = $reviews_data;
+            $info['chat_data'] = $chat_data;
             // var_dump($info);
             // die();
             $this->pdo->commit();

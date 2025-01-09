@@ -38,21 +38,25 @@
                     </div>
                 </div>
             </div>
-
-            <div>
+            <form action="#" method="POST" class="flex gap-2">
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <button class="w-full lg:w-auto px-6 py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
-                        Add to Your Library
+                    <input
+                        type="text"
+                        name="message"
+                        class="flex-1 p-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
+                        placeholder="Type a message...">
+                    <button type="submit" class="px-6 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
+                        Send
                     </button>
                 <?php else: ?>
-                    <div class="w-full lg:w-auto px-6 py-3 bg-yellow-100 text-yellow-800 rounded-lg border border-yellow-300 flex items-center">
+                    <div class="flex-1 p-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 mr-2 fill-current text-yellow-800">
                             <path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" />
                         </svg>
-                        Please log in to add to your library
+                        Please log in to send a message
                     </div>
                 <?php endif; ?>
-            </div>
+            </form>
         </div>
 
         <div class="bg-[var(--secondary)] p-6 rounded-lg">
@@ -79,7 +83,10 @@
                         Submit Review
                     </button>
                 <?php else: ?>
-                    <div class="w-full p-4 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)] text-gray-500">
+                    <div class="w-full p-4 mb-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 mr-2 fill-current text-yellow-800">
+                            <path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" />
+                        </svg>
                         Please log in to submit a review
                     </div>
                 <?php endif; ?>

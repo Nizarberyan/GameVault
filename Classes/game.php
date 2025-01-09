@@ -162,4 +162,16 @@ class Game
         extract($additional_data[1], EXTR_PREFIX_ALL, "r2");
         include("./../pages/gameEdit.php");
     }
+
+    public function reviewSubmit($game_id, $user_id)
+    {
+        $review_submit = $this->pdo->prepare("INSERT INTO reviews (game_id, user_id, review_desc, rating_review, rating_value) VALUES(?, ?, ?, ?, ?);");
+        if (!$review_submit->execute([
+            $game_id,
+            $user_id,
+            $_POST["comment"],
+            $_POST["rating"],
+            $_POST["rating_value"]
+        ])) throw new Exception("Something went wrong!!");
+    }
 }

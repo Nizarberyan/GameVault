@@ -62,7 +62,8 @@
         <div class="bg-[var(--secondary)] p-6 rounded-lg">
             <h3 class="text-xl font-bold mb-4">Reviews & Comments</h3>
 
-            <form action="#" method="POST" class="mb-6">
+            <form action="./../controllers/gameController.php?action=reviewSubmit" method="POST" id="myForm" class="mb-6">
+                <input type="hidden" name="game_id" value="<?= $game_id ?>">
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <textarea
                         name="comment"
@@ -70,14 +71,15 @@
                         placeholder="Write your review..."
                         rows="4"></textarea>
 
-                    <select name="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
+                    <select name="rating" id="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
                         <option value="" disabled selected>Rate the Game</option>
-                        <option value="★★★★★">★★★★★ Excellent</option>
-                        <option value="★★★★☆">★★★★☆ Very Good</option>
-                        <option value="★★★☆☆">★★★☆☆ Good</option>
-                        <option value="★★☆☆☆">★★☆☆☆ Fair</option>
-                        <option value="★☆☆☆☆">★☆☆☆☆ Poor</option>
+                        <option value="★★★★★" data-extra="100">★★★★★ Excellent</option>
+                        <option value="★★★★☆" data-extra="100">★★★★☆ Very Good</option>
+                        <option value="★★★☆☆" data-extra="100">★★★☆☆ Good</option>
+                        <option value="★★☆☆☆" data-extra="100">★★☆☆☆ Fair</option>
+                        <option value="★☆☆☆☆" data-extra="100">★☆☆☆☆ Poor</option>
                     </select>
+                    <input type="hidden" name="rating_value" id="rating_value">
 
                     <button type="submit" class="w-full py-3 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
                         Submit Review

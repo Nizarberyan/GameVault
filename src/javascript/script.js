@@ -21,3 +21,13 @@ function searchGames() {
         }
     });
 }
+
+if (document.getElementById('myForm')) {
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        var select = document.getElementById('rating');
+        var selectedOption = select.options[select.selectedIndex];
+        var extraValue = selectedOption.getAttribute('data-extra');
+        
+        document.getElementById('rating_value').value = extraValue;
+      });
+}

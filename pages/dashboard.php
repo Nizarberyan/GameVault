@@ -53,14 +53,19 @@
             </span>
         </button>
         <div id="ban-management" class="hidden mt-4 space-y-2">
-            <div class="flex items-center justify-between p-2 bg-[var(--secondary)] rounded-lg shadow">
-                <span>User1</span>
-                <button class="bg-red-500 text-[var(--text)] py-1 px-3 rounded hover:bg-red-600">Ban</button>
-            </div>
-            <div class="flex items-center justify-between p-2 bg-[var(--secondary)] rounded-lg shadow">
-                <span>User2</span>
-                <button class="bg-red-500 text-[var(--text)] py-1 px-3 rounded hover:bg-red-600">Ban</button>
-            </div>
+            <?php foreach ($users as $user):
+                extract($user);
+                if ($_SESSION['user_id'] !== $user && $role !== "Admin"): ?>
+                    <div class="flex items-center justify-between p-2 bg-[var(--secondary)] rounded-lg shadow">
+                        <span><?= $full_name ?></span>
+                        <form action="./../controllers/userController.php?action=banManage" method="POST">
+                            <input type="hidden" name="user_id" value="<?= $user_id ?>">
+                            <input type="hidden" name="is_banned" value="<?= $is_banned === 0 ? 1 : 0 ?>">
+                            <button class="bg-red-500 text-[var(--text)] py-1 px-3 rounded hover:bg-red-600"><?= $is_banned === 0 ? 'Ban' : "Unban" ?></button>
+                        </form>
+                    </div>
+            <?php endif;
+            endforeach; ?>
         </div>
     </section>
 </div>

@@ -122,7 +122,7 @@ class User
     }
     public function login($email, $password)
     {
-        $stmt = $this->pdo->prepare("SELECT user_id, user_psw, role FROM users WHERE email = ?");
+        $stmt = $this->pdo->prepare("SELECT user_id, user_psw, role, is_banned FROM users WHERE email = ?");
         $stmt->bindParam(1, $email);
         $stmt->execute();
         $user = $stmt->fetch();
@@ -130,6 +130,7 @@ class User
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
+            $_SESSION['is_banned'] = $user['is_banned'];
             return true;
         }
         throw new Exception("The email or the password is wrong");
@@ -137,7 +138,7 @@ class User
 
     public function usersRendering()
     {
-        $users = $this->pdo->prepare("SELECT full_name, user_id, role FROM users WHERE user_id != {$_SESSION['user_id']}");
+        $users = $this->pdo->prepare("SELECT full_name, user_id, role, is_banned FROM users WHERE user_id != {$_SESSION['user_id']}");
         $users->execute();
         return $users->fetchAll();
     }
@@ -146,5 +147,10 @@ class User
     {
         $stmt = $this->pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?;");
         if (!$stmt->execute([$role, $user_id])) throw new Exception("Something went wrong try again");
+    }
+
+    public function banManage($user_id, $status) {
+        $stmt = $this->pdo->prepare("UPDATE users SET is_banned = ? WHERE user_id = ?;");
+        if (!$stmt->execute([$status, $user_id])) throw new Exception("Something went wrong try again");
     }
 }

@@ -47,6 +47,10 @@ class userController
             case "changeRole":
                 $this->changeRole();
                 break;
+
+            case "banManage":
+                $this->banManage();
+                break;
         }
     }
 
@@ -132,6 +136,22 @@ class userController
             $user = new User($this->pdo);
             $user->changeRole($_POST['user_id'], $_POST['reversed_role']);
             $successMessage = "Role has been changed successfuly!!";
+            $this->redirect("Success", $successMessage, $path);
+            exit();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
+    }
+
+    private function banManage()
+    {
+        $path = "./../controllers/userController.php";
+        try {
+            $user = new User($this->pdo);
+            $user->banManage($_POST['user_id'], $_POST['is_banned']);
+            $successMessage = "Ban status has been changed successfuly!!";
             $this->redirect("Success", $successMessage, $path);
             exit();
         } catch (Exception $e) {

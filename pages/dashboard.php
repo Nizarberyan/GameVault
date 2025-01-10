@@ -32,7 +32,7 @@
                         <div class="space-x-2">
                             <form action="">
                                 <input type="hidden" name="user_id" value="<?= $user_id ?>">
-                                <button class="bg-[var(--accent)] text-[var(--text)] py-1 px-3 rounded hover:bg-opacity-90">To <?= $reverseRole($role) ?></button>
+                                <button class="bg-[var(--accent)] text-[var(--text)] py-1 px-3 rounded hover:bg-opacity-90"><a href="./../controllers/userController.php?action=changeRole">To <?= $reverseRole($role) ?></a></button>
                             </form>
                         </div>
                     </div>

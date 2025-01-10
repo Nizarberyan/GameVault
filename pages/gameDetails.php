@@ -76,10 +76,10 @@
                     <select name="rating" id="rating" class="w-full p-3 mb-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]">
                         <option value="" disabled selected>Rate the Game</option>
                         <option value="★★★★★" data-extra="100">★★★★★ Excellent</option>
-                        <option value="★★★★☆" data-extra="100">★★★★☆ Very Good</option>
-                        <option value="★★★☆☆" data-extra="100">★★★☆☆ Good</option>
-                        <option value="★★☆☆☆" data-extra="100">★★☆☆☆ Fair</option>
-                        <option value="★☆☆☆☆" data-extra="100">★☆☆☆☆ Poor</option>
+                        <option value="★★★★☆" data-extra="80">★★★★☆ Very Good</option>
+                        <option value="★★★☆☆" data-extra="60">★★★☆☆ Good</option>
+                        <option value="★★☆☆☆" data-extra="40">★★☆☆☆ Fair</option>
+                        <option value="★☆☆☆☆" data-extra="20">★☆☆☆☆ Poor</option>
                     </select>
                     <input type="hidden" name="rating_value" id="rating_value">
 

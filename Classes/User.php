@@ -132,12 +132,12 @@ class User
             $_SESSION['role'] = $user['role'];
             return true;
         }
-        return false;
+        throw new Exception("The email or the password is wrong");
     }
 
     public function usersRendering()
     {
-        $users = $this->pdo->prepare("SELECT full_name, user_id, role FROM users");
+        $users = $this->pdo->prepare("SELECT full_name, user_id, role FROM users WHERE user_id != {$_SESSION['user_id']}");
         $users->execute();
         return $users->fetchAll();
     }

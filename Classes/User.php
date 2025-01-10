@@ -141,4 +141,10 @@ class User
         $users->execute();
         return $users->fetchAll();
     }
+
+    public function changeRole($user_id, $role)
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?;");
+        if (!$stmt->execute([$role, $user_id])) throw new Exception("Something went wrong try again");
+    }
 }

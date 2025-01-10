@@ -30,9 +30,10 @@
                     <div class="flex items-center justify-between p-2 bg-[var(--secondary)] rounded-lg shadow">
                         <span><?= $full_name ?></span>
                         <div class="space-x-2">
-                            <form action="">
+                            <form action="./../controllers/userController.php?action=changeRole" method="POST">
                                 <input type="hidden" name="user_id" value="<?= $user_id ?>">
-                                <button class="bg-[var(--accent)] text-[var(--text)] py-1 px-3 rounded hover:bg-opacity-90"><a href="./../controllers/userController.php?action=changeRole">To <?= $reverseRole($role) ?></a></button>
+                                <input type="hidden" name="reversed_role" value="<?= $reverseRole($role) ?>">
+                                <button class="bg-[var(--accent)] text-[var(--text)] py-1 px-3 rounded hover:bg-opacity-90">To <?= $reverseRole($role) ?></button>
                             </form>
                         </div>
                     </div>

@@ -45,6 +45,7 @@ class userController
                 break;
 
             case "changeRole":
+                $this->changeRole();
                 break;
         }
     }
@@ -124,7 +125,21 @@ class userController
         include "./../pages/dashboard.php";
     }
 
-    private function changeRole() {}
+    private function changeRole()
+    {
+        $path = "./../controllers/userController.php";
+        try {
+            $user = new User($this->pdo);
+            $user->changeRole($_POST['user_id'], $_POST['reversed_role']);
+            $successMessage = "Role has been changed successfuly!!";
+            $this->redirect("Success", $successMessage, $path);
+            exit();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
+    }
 }
 
 if (isset($_GET['action']) && $_GET['action'] === 'destroy') {

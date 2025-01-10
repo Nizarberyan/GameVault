@@ -43,14 +43,39 @@ class userController
             case "modify":
                 $this->accModify();
                 break;
+
+            case "changeRole":
+                $this->changeRole();
+                break;
+
+            case "banManage":
+                $this->banManage();
+                break;
         }
     }
-    public function login()
+
+    private function redirect($var, $message, $path)
     {
-        $user = new User($this->pdo);
-        $user->login($_POST['email'], $_POST['password']);
-        header("Location: ./../controllers/gameController.php?action=home");
-        exit();
+        $_SESSION[$var] = true;
+        $_SESSION['Message'] = $message;
+        header("Location: $path");
+    }
+
+    private function login()
+    {
+        $path = "./../pages/login.php";
+        try {
+            $user = new User($this->pdo);
+            $user->login($_POST['email'], $_POST['password']);
+            $pathOnSuccess = "./../controllers/gameController.php?action=home";
+            $successMessage = "Welcome Back!!";
+            $this->redirect("Success", $successMessage, $pathOnSuccess);
+            exit();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
     }
     private function accRender()
     {
@@ -65,7 +90,7 @@ class userController
             $user->accEdit();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            header("Location: ./../pages/profile.php?error=" . urlencode($errorMessage));
+            $this->redirect("Error", $errorMessage, "./../pages/profile.php");
             exit();
         }
     }
@@ -76,24 +101,20 @@ class userController
         try {
             $user = new User($this->pdo);
             if ($user->validation()) {
-                // Retrieve inputs
                 $full_name = $_POST['full_name'];
                 $email = $_POST['email'];
                 $bio = $_POST['bio'] ?? '';
                 $user_id = $_POST['user_id'];
                 $old_profile_img = $_POST['old_profile_img'];
 
-
-
                 $user->accModify();
-
 
                 header("Location: ./../controllers/userController.php?action=on");
                 exit();
             }
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
-            header("Location: ./../pages/profile_edit.php?error=" . urlencode($errorMessage));
+            $this->redirect("Error", $errorMessage, "./../pages/profile_edit.php");
             exit();
         }
     }
@@ -107,21 +128,46 @@ class userController
         };
         include "./../pages/dashboard.php";
     }
+
+    private function changeRole()
+    {
+        $path = "./../controllers/userController.php";
+        try {
+            $user = new User($this->pdo);
+            $user->changeRole($_POST['user_id'], $_POST['reversed_role']);
+            $successMessage = "Role has been changed successfuly!!";
+            $this->redirect("Success", $successMessage, $path);
+            exit();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
+    }
+
+    private function banManage()
+    {
+        $path = "./../controllers/userController.php";
+        try {
+            $user = new User($this->pdo);
+            $user->banManage($_POST['user_id'], $_POST['is_banned']);
+            $successMessage = "Ban status has been changed successfuly!!";
+            $this->redirect("Success", $successMessage, $path);
+            exit();
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
+    }
 }
 
 if (isset($_GET['action']) && $_GET['action'] === 'destroy') {
-
     $_SESSION = array();
-
-
     if (isset($_COOKIE[session_name()])) {
         setcookie(session_name(), '', time() - 3600, '/');
     }
-
-
     session_destroy();
-
-
     header('Location: ./../pages/login.php');
     exit();
 }

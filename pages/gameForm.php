@@ -58,8 +58,8 @@
                 <input type="text" name="additional_img" id="additional_img" class="w-full p-2 rounded bg-[var(--background)] text-white" value="">
             </div>
             <div>
-                <label class="block text-sm font-medium mb-1">Additional Image2</label>
-                <input type="file" name="additional_img2" id="additional_img2" class="w-full p-2 rounded bg-[var(--background)] text-white">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Additional Image2</label>
+                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-[var(--background)] dark:border-gray-600 dark:placeholder-gray-400" type="file" name="additional_img2" id="additional_img2">
                 <div id="imagePreviews" class="mt-2 flex flex-wrap gap-2"></div>
             </div>
             <button type="submit" id="addGame" class="w-full bg-[var(--primary)] text-white py-2 rounded hover:bg-[var(--accent)]">Add Game</button>
@@ -71,6 +71,7 @@
     function openModal() {
         document.getElementById('gameForm').classList.remove('hidden');
     }
+
     function closeModal() {
         document.getElementById('gameForm').classList.add('hidden');
     }

@@ -10,11 +10,12 @@ class User
 
     public function accRender()
     {
-        $user_id = 3;
-        $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :user_id;");
-        $info->bindParam(":user_id", $user_id);
+        $user_id = $_SESSION['user_id'];
+        $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = ?;");
+        $info->bindParam(1, $user_id);
         $info->execute();
-        $row = $info->fetch(PDO::FETCH_ASSOC);
+        $row = $info->fetch();
+
         if ($row) {
             extract($row);
         } else {
@@ -25,11 +26,11 @@ class User
 
     public function accEdit()
     {
-        $user_id = 3;
+        $user_id = (int) $_SESSION['user_id'];
         $info = $this->pdo->prepare("SELECT * FROM users WHERE user_id = :user_id;");
-        $info->bindParam(":user_id", $user_id, PDO::PARAM_STR);
+        $info->bindParam(":user_id", $user_id);
         $info->execute();
-        $row = $info->fetch(PDO::FETCH_ASSOC);
+        $row = $info->fetch();
         if ($row) {
             extract($row);
         } else {
@@ -40,25 +41,29 @@ class User
 
     public function validation()
     {
-        if (empty($_POST['full_name']) || empty($_POST['email']) || empty($_POST['bio'])) {
-            throw new Exception("Full name, email, or bio should not be empty.");
+        $user_id = (int) $_SESSION['user_id'];
+
+        if (empty($_POST['full_name']) || empty($_POST['email'])) {
+            throw new Exception("Full name OR email should not be empty.");
+        }
+
+        if (!empty($_POST['bio'])) {
+            if (!preg_match("/^[a-zA-Z\s]+$/", $_POST['bio'])) {
+                throw new Exception("Bio must only contain letters and spaces.");
+            }
         }
 
         if (!preg_match("/^[a-zA-Z\s]+$/", $_POST['full_name'])) {
             throw new Exception("Full name must only contain letters and spaces.");
         }
 
-        if (!preg_match("/^[a-zA-Z\s]+$/", $_POST['bio'])) {
-            throw new Exception("Bio must only contain letters and spaces.");
-        }
-
         if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             throw new Exception("Invalid email format.");
         }
 
-        $emails = $this->pdo->prepare("SELECT email, full_name FROM users;");
-        $emails->execute();
-        $rows = $emails->fetchAll(PDO::FETCH_ASSOC);
+        $emails = $this->pdo->prepare("SELECT email, full_name FROM users WHERE user_id != ?;");
+        $emails->execute([$user_id]);
+        $rows = $emails->fetchAll();
 
         foreach ($rows as $row) {
             if ($row["email"] == $_POST['email'] || $row["full_name"] == $_POST['full_name']) {
@@ -71,9 +76,10 @@ class User
 
     public function accModify()
     {
+
         $full_name = $_POST['full_name'];
         $email = $_POST['email'];
-        $bio = $_POST['bio'];
+        $bio = $_POST['bio'] ?? '';
         $user_id = $_POST['user_id'];
         $old_profile_img = $_POST['old_profile_img'];
 
@@ -82,7 +88,7 @@ class User
             if (!in_array($_FILES['profile_image']['type'], $allowedTypes)) {
                 throw new Exception("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
             }
-            $target_dir = "./../assests/";
+            $target_dir = "./../assets/";
             $file_extension = strtolower(pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION));
             $unique_file_name = uniqid() . '.' . $file_extension;
             $profile_img = $target_dir . $unique_file_name;
@@ -104,5 +110,47 @@ class User
         $update->execute();
 
         header("Location: ./../controllers/userController.php?action=on");
+    }
+
+    public function insertUser($username, $email, $password)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO users (full_name, email, user_psw) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $username);
+        $stmt->bindParam(2, $email);
+        $stmt->bindParam(3, $password);
+        return $stmt->execute();
+    }
+    public function login($email, $password)
+    {
+        $stmt = $this->pdo->prepare("SELECT user_id, user_psw, role, is_banned FROM users WHERE email = ?");
+        $stmt->bindParam(1, $email);
+        $stmt->execute();
+        $user = $stmt->fetch();
+        if ($user && password_verify($password, $user['user_psw'])) {
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
+            $_SESSION['is_banned'] = $user['is_banned'];
+            return true;
+        }
+        throw new Exception("The email or the password is wrong");
+    }
+
+    public function usersRendering()
+    {
+        $users = $this->pdo->prepare("SELECT full_name, user_id, role, is_banned FROM users WHERE user_id != {$_SESSION['user_id']}");
+        $users->execute();
+        return $users->fetchAll();
+    }
+
+    public function changeRole($user_id, $role)
+    {
+        $stmt = $this->pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?;");
+        if (!$stmt->execute([$role, $user_id])) throw new Exception("Something went wrong try again");
+    }
+
+    public function banManage($user_id, $status) {
+        $stmt = $this->pdo->prepare("UPDATE users SET is_banned = ? WHERE user_id = ?;");
+        if (!$stmt->execute([$status, $user_id])) throw new Exception("Something went wrong try again");
     }
 }

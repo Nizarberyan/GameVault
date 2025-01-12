@@ -38,14 +38,18 @@ class Game
             }
 
             $reviews = $this->pdo->prepare("SELECT review_desc, full_name, rating_review FROM reviews JOIN users ON users.user_id = reviews.user_id WHERE reviews.game_id = ?;");
-            $reviews->execute([$game_id]);
+            if (!$reviews->execute([$game_id])) throw new Exception("Something went wrong");
             $reviews_data = $reviews->fetchAll();
 
             $messages = $this->pdo->prepare("SELECT message, full_name FROM live_chat JOIN users ON users.user_id = live_chat.user_id WHERE live_chat.game_id = ? ORDER BY live_chat.created_at ASC;");
-            $messages->execute([$game_id]);
+            if (!$messages->execute([$game_id])) throw new Exception("Something went wrong");
             $chat_data = $messages->fetchAll();
 
-            $info = array_merge($game_info->fetch(), $updatedRows[0], $updatedRows[1]);
+            $total_points = $this->pdo->prepare("SELECT SUM(rating_value) AS totalPoints, COUNT(review_desc) AS divisor FROM reviews;");
+            if (!$total_points->execute()) throw new Exception("Something went wrong");
+            $ratings_data = $total_points->fetch();
+
+            $info = array_merge($game_info->fetch(), $updatedRows[0], $updatedRows[1], $ratings_data);
             $info['reviews'] = $reviews_data;
             $info['chat_data'] = $chat_data;
             // var_dump($info);
@@ -169,5 +173,17 @@ class Game
         extract($additional_data[0], EXTR_PREFIX_ALL, "r1");
         extract($additional_data[1], EXTR_PREFIX_ALL, "r2");
         include("./../pages/gameEdit.php");
+    }
+
+    public function reviewSubmit($game_id, $user_id)
+    {
+        $review_submit = $this->pdo->prepare("INSERT INTO reviews (game_id, user_id, review_desc, rating_review, rating_value) VALUES(?, ?, ?, ?, ?);");
+        if (!$review_submit->execute([
+            $game_id,
+            $user_id,
+            $_POST["comment"],
+            $_POST["rating"],
+            $_POST["rating_value"]
+        ])) throw new Exception("Something went wrong!!");
     }
 }

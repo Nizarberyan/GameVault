@@ -41,18 +41,36 @@ include_once("./../pages/header.php");
                                         <p>Developer: <?= $developer ?></p>
                                         <p>Publisher: <?= $publisher ?></p>
                                     </div>
-                                </div>
                             </a>
-                            <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST">
-                                <input type='hidden' name='game_id' value='<?= $game_id ?>'>
-                                <button type='submit' class='w-full px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)]'>
-                                    <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
-                                </button>
-                            </form>
                         </div>
-                    <?php endif ?>
-                <?php endforeach ?>
+                        <div>
+                            <?php if (!isset($_SESSION['user_id'])): ?>
+                                <div class="flex-1 p-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 mr-2 fill-current text-yellow-800">
+                                        <path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" />
+                                    </svg>
+                                    Please log in to add to your library
+                                </div>
+                            <?php elseif ($_SESSION['is_banned'] === 1): ?>
+                                <div class="flex-0 p-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 mr-2 fill-current text-yellow-800">
+                                        <path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" />
+                                    </svg>
+                                    You are currently Banned
+                                </div>
+                            <?php else: ?>
+                                <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST">
+                                    <input type='hidden' name='game_id' value='<?= $game_id ?>'>
+                                    <button type='submit' class='w-full px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)]'>
+                                        <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
+                                    </button>
+                                </form>
+                            <?php endif; ?>
+                        </div>
             </div>
+        <?php endif ?>
+    <?php endforeach ?>
+        </div>
         </div>
 
         <div>
@@ -76,12 +94,30 @@ include_once("./../pages/header.php");
                                     </div>
                                 </a>
                             </div>
-                            <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST">
-                                <input type='hidden' name='game_id' value='<?= $game_id ?>'>
-                                <button type='submit' class='w-full px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)]'>
-                                    <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
-                                </button>
-                            </form>
+                            <div>
+                                <?php if (!isset($_SESSION['user_id'])): ?>
+                                    <div class="flex-1 p-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 mr-2 fill-current text-yellow-800">
+                                            <path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" />
+                                        </svg>
+                                        Please log in to add to your library
+                                    </div>
+                                <?php elseif ($_SESSION['is_banned'] === 1): ?>
+                                    <div class="flex-0 p-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="h-5 w-5 mr-2 fill-current text-yellow-800">
+                                            <path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" />
+                                        </svg>
+                                        You are currently Banned
+                                    </div>
+                                <?php else: ?>
+                                    <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST">
+                                        <input type='hidden' name='game_id' value='<?= $game_id ?>'>
+                                        <button type='submit' class='w-full px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)]'>
+                                            <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php endif ?>
                 <?php endforeach ?>

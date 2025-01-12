@@ -48,7 +48,9 @@ class gameController
             case "gameDetails":
                 $this->gameDetails();
                 break;
-
+            case "reviewSubmit":
+                $this->reviewSubmit();
+                break;
             case "addToLibrary":
                 $this->addToLibrary();
                 break;
@@ -265,6 +267,22 @@ class gameController
         }
     }
 
+    private function reviewSubmit()
+    {
+        $path = "./../controllers/gameController.php?action=gameDetails&id={$_POST['game_id']}";
+        try {
+            $games = new Game($this->pdo);
+            $user_id = (int) $_SESSION['user_id'];
+            $info = $games->reviewSubmit($_POST['game_id'], $user_id);
+            $successMessage = "Review has been published successfully!!";
+            $this->redirect("Success", $successMessage, $path);
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+            exit();
+        }
+    }
+
     private function addToLibrary()
     {
         $path = "./../controllers/gameController.php?action=home";
@@ -404,6 +422,7 @@ class gameController
         }
     }
 }
+
 
 if (isset($_GET['action'])) {
     $userController = new gameController();

@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . "../../controllers/gameController.php";
 class Game
 {
     private $pdo;
@@ -62,7 +62,7 @@ class Game
         }
     }
 
-    public function addGame($target_dir, $additional_img)
+    public function addGame($target_dir, $additional_img, $controller)
     {
         try {
             $this->pdo->beginTransaction();
@@ -76,10 +76,11 @@ class Game
             $insert->bindParam(7, $_POST['publisher']);
             $insert->bindParam(8, $_POST['rating']);
             if (!$insert->execute()) {
-                throw new Exception("The game has not been added seccussfuly!!");
+                throw new Exception("The game has not been added successfully!!");
             }
 
             $last_id = (int) $this->pdo->lastInsertId();
+
             $firstUrl = $this->pdo->prepare("INSERT INTO screenshots (game_id, url, row_id) VALUES (?, ?, 1);");
             $firstUrl->bindParam(1, $last_id);
             $firstUrl->bindParam(2, $_POST['additional_img']);
@@ -93,6 +94,13 @@ class Game
             if (!$secondUrl->execute()) {
                 throw new Exception("An error occurred with the second image insertion.");
             }
+
+            // Log the action of adding a new game
+            $user_id = $_SESSION['user_id'];
+            $action = "Added new game: " . $_POST['Title'];
+
+            // Use the passed controller instance to log the action
+            $controller->logAction($user_id, $action, $last_id);
 
             $this->pdo->commit();
         } catch (Exception $e) {

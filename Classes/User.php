@@ -131,6 +131,7 @@ class User
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['is_banned'] = $user['is_banned'];
+            header("Location: ./../pages/dashboard.php");
             return true;
         }
         throw new Exception("The email or the password is wrong");

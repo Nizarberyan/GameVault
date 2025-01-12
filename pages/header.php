@@ -69,7 +69,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php endif; ?>
 
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin"): ?>
-                        <li><a href="./../pages/dashboard.php" class="hover:underline">Dashboard</a></li>
+
                         <li><a href="./../controllers/gameController.php?action=viewLogs" class="hover:underline">Action Logs</a></li>
                     <?php endif; ?>
 

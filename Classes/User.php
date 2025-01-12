@@ -139,8 +139,9 @@ class User
 
     public function usersRendering()
     {
-        $users = $this->pdo->prepare("SELECT full_name, user_id, role, is_banned FROM users WHERE user_id != {$_SESSION['user_id']}");
-        $users->execute();
+        $user_id = $_SESSION['user_id'];
+        $users = $this->pdo->prepare("SELECT full_name, user_id, role, is_banned FROM users WHERE user_id != ?");
+        $users->execute([$user_id]);
         return $users->fetchAll();
     }
 
@@ -150,7 +151,8 @@ class User
         if (!$stmt->execute([$role, $user_id])) throw new Exception("Something went wrong try again");
     }
 
-    public function banManage($user_id, $status) {
+    public function banManage($user_id, $status)
+    {
         $stmt = $this->pdo->prepare("UPDATE users SET is_banned = ? WHERE user_id = ?;");
         if (!$stmt->execute([$status, $user_id])) throw new Exception("Something went wrong try again");
     }

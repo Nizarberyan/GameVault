@@ -130,6 +130,7 @@ class User
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
+            header("Location: ./../pages/dashboard.php");
             return true;
         }
         return false;

@@ -24,25 +24,30 @@ include_once("./../pages/header.php");
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <?php foreach ($info as $game):
                     extract($game);
+                    $isInLibrary = false;
+                    if (isset($_SESSION['user_id'])) {
+                        $isInLibrary = $this->isGameInLibrary($_SESSION['user_id'], $game_id);
+                    }
                     if ($category === "Action"): ?>
                         <div class='bg-[var(--secondary)] p-4 rounded shadow h-[500px] flex flex-col justify-between'>
-                            <div>
-                                <a href="./../controllers/gameController.php?action=gameDetails&id=<?= $game_id ?>">
+                            <a href="./../controllers/gameController.php?action=gameDetails&id=<?= $game_id ?>" class="flex-grow">
+                                <div>
                                     <img src='<?= $game_img ?>' alt='' class='w-full h-40 object-cover rounded mb-4'>
                                     <h3 class='text-lg font-bold mb-2'><?= $game_name ?></h3>
                                     <p class='text-sm mb-4 line-clamp-3'><?= substr($game_desc, 0, 130) . "..." ?></p>
-                                    <br>
                                     <div class='text-sm'>
                                         <p>Rating: <?= $rating . "/100" ?></p>
                                         <p>Release Date: <?= $release_date ?></p>
                                         <p>Developer: <?= $developer ?></p>
                                         <p>Publisher: <?= $publisher ?></p>
                                     </div>
-                                </a>
-                            </div>
-                            <form action='' method='POST'>
-                                <input type='hidden' name='game_title' value=''>
-                                <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                                </div>
+                            </a>
+                            <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST">
+                                <input type='hidden' name='game_id' value='<?= $game_id ?>'>
+                                <button type='submit' class='w-full px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)]'>
+                                    <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
+                                </button>
                             </form>
                         </div>
                     <?php endif ?>
@@ -71,9 +76,11 @@ include_once("./../pages/header.php");
                                     </div>
                                 </a>
                             </div>
-                            <form action='' method='POST'>
-                                <input type='hidden' name='game_title' value=''>
-                                <button type='submit' class='w-full px-4 py-2 bg-[var(--primary)] text-white rounded hover:bg-[var(--accent)]'>Add to Library</button>
+                            <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST">
+                                <input type='hidden' name='game_id' value='<?= $game_id ?>'>
+                                <button type='submit' class='w-full px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)]'>
+                                    <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
+                                </button>
                             </form>
                         </div>
                     <?php endif ?>

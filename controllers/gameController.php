@@ -48,6 +48,22 @@ class gameController
             case "gameDetails":
                 $this->gameDetails();
                 break;
+
+            case "addToLibrary":
+                $this->addToLibrary();
+                break;
+
+            case "viewLibrary":
+                $this->viewLibrary();
+                break;
+
+            case "removeFromLibrary":
+                $this->removeFromLibrary();
+                break;
+
+            case "viewLogs":
+                $this->viewLogs();
+                break;
         }
     }
 
@@ -126,7 +142,7 @@ class gameController
                 throw new Exception("Failed to upload the file.");
             }
 
-            $newGame->addGame($target_dir, $additional_img);
+            $newGame->addGame($target_dir, $additional_img, new gameController);
             $successMessage = "Game has been Added successfully!!";
             $this->redirect("Success", $successMessage, $path);
         } catch (Exception $e) {
@@ -246,6 +262,145 @@ class gameController
             $errorMessage = $e->getMessage();
             $this->redirect("Error", $errorMessage, $path);
             exit();
+        }
+    }
+
+    private function addToLibrary()
+    {
+        $path = "./../controllers/gameController.php?action=home";
+        try {
+            if (!isset($_SESSION['user_id'])) {
+                throw new Exception("You must be logged in to add a game to your library.");
+            }
+
+            $user_id = $_SESSION['user_id'];
+            $game_id = $_POST['game_id'];
+
+            $stmt = $this->pdo->prepare("INSERT INTO user_library (user_id, game_id) VALUES (?, ?)");
+            if (!$stmt->execute([$user_id, $game_id])) {
+                throw new Exception("Failed to add the game to your library.");
+            }
+            $this->logAction($user_id, "Added to library", $game_id);
+
+            $successMessage = "Game added to your library successfully!";
+            $this->redirect("Success", $successMessage, $path);
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+        }
+    }
+
+    private function viewLibrary()
+    {
+        $path = "./../pages/library.php";
+        try {
+            if (!isset($_SESSION['user_id'])) {
+                throw new Exception("You must be logged in to view your library.");
+            }
+
+            $user_id = $_SESSION['user_id'];
+            $stmt = $this->pdo->prepare("SELECT library.* FROM user_library JOIN library ON user_library.game_id = library.game_id WHERE user_library.user_id = ?");
+            if (!$stmt->execute([$user_id])) {
+                throw new Exception("Failed to fetch your library.");
+            }
+
+            $library = $stmt->fetchAll();
+            include $path;
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $_SESSION['Error'] = true;
+            $_SESSION['Message'] = $errorMessage;
+            header("Location: ./../controllers/gameController.php?action=home");
+        }
+    }
+
+    private function isGameInLibrary($user_id, $game_id)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM user_library WHERE user_id = ? AND game_id = ?");
+        $stmt->execute([$user_id, $game_id]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    private function removeFromLibrary()
+    {
+        $path = "./../controllers/gameController.php?action=viewLibrary";
+        try {
+            if (!isset($_SESSION['user_id'])) {
+                throw new Exception("You must be logged in to remove a game from your library.");
+            }
+
+            $user_id = $_SESSION['user_id'];
+            $game_id = $_POST['game_id'];
+
+            $stmt = $this->pdo->prepare("DELETE FROM user_library WHERE user_id = ? AND game_id = ?");
+            if (!$stmt->execute([$user_id, $game_id])) {
+                throw new Exception("Failed to remove the game from your library.");
+            }
+
+
+            $this->logAction($user_id, 'removed from library', $game_id);
+
+            $successMessage = "Game removed from your library successfully!";
+            $this->redirect("Success", $successMessage, $path);
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+        }
+    }
+
+    public function logAction($user_id, $action, $game_id)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO action_logs (user_id, action, game_id) VALUES (?, ?, ?)");
+        $stmt->execute([$user_id, $action, $game_id]);
+    }
+
+    private function addToCollection()
+    {
+        $path = "./../controllers/gameController.php?action=viewLibrary";
+        try {
+            if (!isset($_SESSION['user_id'])) {
+                throw new Exception("You must be logged in to add a game to your collection.");
+            }
+
+            $user_id = $_SESSION['user_id'];
+            $game_id = $_POST['game_id'];
+
+
+            $stmt = $this->pdo->prepare("INSERT INTO user_library (user_id, game_id) VALUES (?, ?)");
+            if (!$stmt->execute([$user_id, $game_id])) {
+                throw new Exception("Failed to add the game to your collection.");
+            }
+
+
+            $this->logAction($user_id, 'added to library', $game_id);
+
+            $successMessage = "Game added to your collection successfully!";
+            $this->redirect("Success", $successMessage, $path);
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $this->redirect("Error", $errorMessage, $path);
+        }
+    }
+
+    private function viewLogs()
+    {
+        $path = "./../pages/adminLogs.php";
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT al.log_id, u.full_name, g.game_name, al.action, al.game_id, al.timestamp 
+                FROM action_logs al
+                LEFT JOIN users u ON al.user_id = u.user_id
+                LEFT JOIN library g ON al.game_id = g.game_id
+                ORDER BY al.timestamp DESC
+            ");
+            $stmt->execute();
+            $logs = $stmt->fetchAll();
+            include $path;
+        } catch (Exception $e) {
+            $errorMessage = $e->getMessage();
+            $_SESSION['Error'] = true;
+            $_SESSION['Message'] = $errorMessage;
+            header("Location: ./../controllers/gameController.php?action=home");
         }
     }
 }

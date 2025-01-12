@@ -38,15 +38,17 @@
                     </div>
                 </div>
             </div>
-            <form action="#" method="POST" class="flex gap-2">
+            <?php
+            $isInLibrary = false;
+            if (isset($_SESSION['user_id'])) {
+                $isInLibrary = $this->isGameInLibrary($_SESSION['user_id'], $game_id);
+            }
+            ?>
+            <form action="./../controllers/gameController.php?action=<?= $isInLibrary ? 'removeFromLibrary' : 'addToLibrary' ?>" method="POST" class="flex gap-2">
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <input
-                        type="text"
-                        name="message"
-                        class="flex-1 p-3 rounded-lg bg-[var(--background)] border border-[var(--accent)]"
-                        placeholder="Type a message...">
-                    <button type="submit" class="px-6 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
-                        Send
+                    <input type="hidden" name="game_id" value="<?= $game_id ?>">
+                    <button type="submit" class="px-8 py-4 text-lg bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--accent)] transition-colors">
+                        <?= $isInLibrary ? 'Remove from Library' : 'Add to Library' ?>
                     </button>
                 <?php else: ?>
                     <div class="flex-1 p-3 rounded-lg bg-yellow-100 text-yellow-800 border border-yellow-300 flex items-center">

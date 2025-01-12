@@ -56,7 +56,7 @@ if (session_status() === PHP_SESSION_NONE) {
             <nav>
                 <ul class="flex space-x-4">
                     <li><a href="./../controllers/gameController.php?action=home" class="hover:underline">Home</a></li>
-                    <li><a href="library.php" class="hover:underline">Library</a></li>
+                    <li><a href="./../controllers/gameController.php?action=viewLibrary" class="hover:underline">Library</a></li>
                     <li><a href="./../controllers/userController.php?action=on" class="hover:underline">Profile</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li><a href="./../controllers/userController.php?action=destroy" class="hover:underline">Logout</a></li>
@@ -66,7 +66,8 @@ if (session_status() === PHP_SESSION_NONE) {
                     <?php endif; ?>
 
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin"): ?>
-                        <li><a href="./../controllers/userController.php" class="hover:underline">Dashboard</a></li>
+                        <li><a href="./../pages/dashboard.php" class="hover:underline">Dashboard</a></li>
+                        <li><a href="./../controllers/gameController.php?action=viewLogs" class="hover:underline">Action Logs</a></li>
                     <?php endif; ?>
 
 

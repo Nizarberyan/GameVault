@@ -1,5 +1,9 @@
 <?php require_once("./../pages/header.php") ?>
-
+<?php if (!isset($_SESSION['user_id']) && $_SESSION['role'] !== 'Admin') {
+    header("Location: ./../controllers/gameController.php?action=home");
+    exit();
+}
+?>
 <div class="container mx-auto space-y-6 min-h-[85vh] mt-5 mb-5 p-5 flex flex-col justify-center">
     <section class="bg-[var(--secondary)] rounded-lg p-6 shadow-md">
         <h2 class="text-lg font-semibold text-[var(--primary)] mb-4">Manage Games</h2>
